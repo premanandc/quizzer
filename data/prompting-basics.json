@@ -1,0 +1,315 @@
+{
+  "quiz_title": "Prompting Basics – Chapter Review",
+  "questions": [
+    {
+      "id": "Q1",
+      "question_type": "single_choice",
+      "question_text": "What is the most important characteristic of a well-formed prompt?",
+      "options": [
+        {
+          "option_id": "A",
+          "option_text": "Lengthy and descriptive",
+          "is_correct": false,
+          "explanation": "While detail can help, unnecessarily long prompts may introduce ambiguity or exceed token limits."
+        },
+        {
+          "option_id": "B",
+          "option_text": "Creative and informal",
+          "is_correct": false,
+          "explanation": "Creativity may help in some tasks, but clarity and precision are more critical universally."
+        },
+        {
+          "option_id": "C",
+          "option_text": "Clear and specific",
+          "is_correct": true,
+          "explanation": "Clarity and specificity ensure the model understands the intent and format of the desired output."
+        },
+        {
+          "option_id": "D",
+          "option_text": "Formatted as a question",
+          "is_correct": false,
+          "explanation": "Not all tasks require a question format. Some require instructions or statements."
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "question_type": "multiple_choice",
+      "question_text": "What are common types of instructions used in prompts?",
+      "options": [
+        {
+          "option_id": "A",
+          "option_text": "Answering questions",
+          "is_correct": true,
+          "explanation": "This is one of the most common use cases for LLMs and a core type of instruction."
+        },
+        {
+          "option_id": "B",
+          "option_text": "Classifying inputs",
+          "is_correct": true,
+          "explanation": "Classification tasks often require structured output based on input evaluation."
+        },
+        {
+          "option_id": "C",
+          "option_text": "Compiling source code",
+          "is_correct": false,
+          "explanation": "While LLMs can generate code, they don't compile or execute it themselves."
+        },
+        {
+          "option_id": "D",
+          "option_text": "Translating between formats or languages",
+          "is_correct": true,
+          "explanation": "Translation is a frequent LLM task that benefits from well-structured prompting."
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "question_type": "single_choice",
+      "question_text": "Why is it useful to include context in your prompt?",
+      "options": [
+        {
+          "option_id": "A",
+          "option_text": "It allows the model to perform basic math.",
+          "is_correct": false,
+          "explanation": "Math capabilities are limited and not related to context inclusion."
+        },
+        {
+          "option_id": "B",
+          "option_text": "It helps the model tailor its output to the situation.",
+          "is_correct": true,
+          "explanation": "Providing background, goals, or constraints helps guide the model's response appropriately."
+        },
+        {
+          "option_id": "C",
+          "option_text": "It increases the model's creativity.",
+          "is_correct": false,
+          "explanation": "Context improves relevance and accuracy, not necessarily creativity."
+        },
+        {
+          "option_id": "D",
+          "option_text": "It speeds up the response time.",
+          "is_correct": false,
+          "explanation": "Context doesn't affect model latency directly."
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "question_type": "multiple_choice",
+      "question_text": "Which elements make up the structure of a good prompt?",
+      "options": [
+        {
+          "option_id": "A",
+          "option_text": "Instruction",
+          "is_correct": true,
+          "explanation": "Instructions tell the model what task to perform."
+        },
+        {
+          "option_id": "B",
+          "option_text": "Input data or context",
+          "is_correct": true,
+          "explanation": "Input data informs the model about what it is working with."
+        },
+        {
+          "option_id": "C",
+          "option_text": "Desired output format",
+          "is_correct": true,
+          "explanation": "Telling the model what form the output should take helps reduce hallucinations and ambiguity."
+        },
+        {
+          "option_id": "D",
+          "option_text": "Debug logs",
+          "is_correct": false,
+          "explanation": "Debug logs are not part of prompt structure."
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "question_type": "single_choice",
+      "question_text": "What is the purpose of specifying output format in a prompt?",
+      "options": [
+        {
+          "option_id": "A",
+          "option_text": "To limit the model's creativity",
+          "is_correct": false,
+          "explanation": "Format specification improves clarity, not necessarily limits creativity."
+        },
+        {
+          "option_id": "B",
+          "option_text": "To reduce the number of tokens in the response",
+          "is_correct": false,
+          "explanation": "Token count is controlled by model configuration, not just output formatting."
+        },
+        {
+          "option_id": "C",
+          "option_text": "To ensure the model produces responses in a consistent and usable way",
+          "is_correct": true,
+          "explanation": "Specifying format helps align output to structured tasks (e.g., JSON, bullet list, table)."
+        },
+        {
+          "option_id": "D",
+          "option_text": "To prevent hallucinations",
+          "is_correct": false,
+          "explanation": "While helpful, format alone cannot eliminate hallucinations."
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "question_type": "multiple_choice",
+      "question_text": "Which of the following can improve prompt effectiveness?",
+      "options": [
+        {
+          "option_id": "A",
+          "option_text": "Being overly vague to allow flexibility",
+          "is_correct": false,
+          "explanation": "Vagueness reduces clarity and increases ambiguity in the model's output."
+        },
+        {
+          "option_id": "B",
+          "option_text": "Stating the task clearly at the beginning",
+          "is_correct": true,
+          "explanation": "Starting with a clear instruction helps the model immediately understand what is expected."
+        },
+        {
+          "option_id": "C",
+          "option_text": "Using delimiters to separate sections of the prompt",
+          "is_correct": true,
+          "explanation": "Delimiters help clarify which parts are instruction, input, or formatting expectations."
+        },
+        {
+          "option_id": "D",
+          "option_text": "Asking multiple unrelated tasks in a single prompt",
+          "is_correct": false,
+          "explanation": "Multiple tasks confuse the model and often lead to poor or partial responses."
+        }
+      ]
+    },
+    {
+      "id": "Q7",
+      "question_type": "single_choice",
+      "question_text": "Which delimiter is commonly used to clearly separate sections in a prompt?",
+      "options": [
+        {
+          "option_id": "A",
+          "option_text": "Exclamation marks (!)",
+          "is_correct": false,
+          "explanation": "Exclamation marks are not standard for structuring prompts."
+        },
+        {
+          "option_id": "B",
+          "option_text": "Triple backticks (```)",
+          "is_correct": true,
+          "explanation": "Triple backticks are commonly used to mark input, output, or code sections clearly."
+        },
+        {
+          "option_id": "C",
+          "option_text": "Double commas (,,)",
+          "is_correct": false,
+          "explanation": "Double commas have no semantic meaning in prompt structure."
+        },
+        {
+          "option_id": "D",
+          "option_text": "Underscores (____)",
+          "is_correct": false,
+          "explanation": "Underscores may work visually, but are not widely used or recognized by models."
+        }
+      ]
+    },
+    {
+      "id": "Q8",
+      "question_type": "multiple_choice",
+      "question_text": "Why is it helpful to test prompts iteratively?",
+      "options": [
+        {
+          "option_id": "A",
+          "option_text": "To observe how changes affect the model's output",
+          "is_correct": true,
+          "explanation": "Testing helps understand which changes improve clarity, tone, or accuracy."
+        },
+        {
+          "option_id": "B",
+          "option_text": "To reduce API latency",
+          "is_correct": false,
+          "explanation": "Prompt structure doesn't significantly affect API latency."
+        },
+        {
+          "option_id": "C",
+          "option_text": "To refine and optimize for edge cases",
+          "is_correct": true,
+          "explanation": "Iterative testing allows you to validate output across diverse input variations."
+        },
+        {
+          "option_id": "D",
+          "option_text": "To avoid writing instructions altogether",
+          "is_correct": false,
+          "explanation": "Instructions are a fundamental part of most prompts."
+        }
+      ]
+    },
+    {
+      "id": "Q9",
+      "question_type": "single_choice",
+      "question_text": "What does it mean to 'chain' prompt elements together?",
+      "options": [
+        {
+          "option_id": "A",
+          "option_text": "To repeat the prompt until a correct answer is found",
+          "is_correct": false,
+          "explanation": "That describes iterative prompting, not chaining elements."
+        },
+        {
+          "option_id": "B",
+          "option_text": "To include instruction, input, and output format in one coherent structure",
+          "is_correct": true,
+          "explanation": "Chaining refers to clearly linking all prompt elements to guide the model effectively."
+        },
+        {
+          "option_id": "C",
+          "option_text": "To ask the same task in different ways within one prompt",
+          "is_correct": false,
+          "explanation": "That could confuse the model rather than guide it."
+        },
+        {
+          "option_id": "D",
+          "option_text": "To connect multiple models for multi-stage output",
+          "is_correct": false,
+          "explanation": "That refers to multi-agent or pipeline prompting, not element chaining."
+        }
+      ]
+    },
+    {
+      "id": "Q10",
+      "question_type": "multiple_choice",
+      "question_text": "What are signs that a prompt needs refinement?",
+      "options": [
+        {
+          "option_id": "A",
+          "option_text": "Inconsistent or irrelevant outputs",
+          "is_correct": true,
+          "explanation": "This is a common sign that the model didn't understand the prompt well."
+        },
+        {
+          "option_id": "B",
+          "option_text": "Excessively long prompt exceeding token limits",
+          "is_correct": true,
+          "explanation": "Overly long prompts may truncate output or cause runtime errors."
+        },
+        {
+          "option_id": "C",
+          "option_text": "Correct response in the first attempt",
+          "is_correct": false,
+          "explanation": "That's a good sign—refinement is unnecessary if the prompt already works well."
+        },
+        {
+          "option_id": "D",
+          "option_text": "Model asks clarifying questions",
+          "is_correct": true,
+          "explanation": "This may indicate ambiguity or missing information in the prompt."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "quiz_title": "",
+  "questions": [
+    {
+      "id": "Q1",
+      "question_type": "invalid_type",
+      "question_text": "",
+      "options": [
+        {
+          "option_id": "A",
+          "option_text": "Option A",
+          "is_correct": true,
+          "explanation": "Explanation A"
+        },
+        {
+          "option_id": "A",
+          "option_text": "Option B",
+          "is_correct": true,
+          "explanation": "Explanation B"
+        }
+      ]
+    }
+  ]
+}
