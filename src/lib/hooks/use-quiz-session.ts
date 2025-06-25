@@ -19,7 +19,7 @@ import type {
 } from '@/lib/types/quiz-session'
 
 export function useQuizSession() {
-  const { data: sessionData } = useSession()
+  const { data: _sessionData } = useSession()
   const [quiz, setQuiz] = useState<QuizDetails | null>(null)
   const [session, setSession] = useState<QuizSession | null>(null)
   const [result, setResult] = useState<QuizAttemptResult | null>(null)

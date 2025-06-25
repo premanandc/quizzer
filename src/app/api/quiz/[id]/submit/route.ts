@@ -9,7 +9,7 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id: quizId } = await params
+    const { id } = await params
     const session = await auth()
     
     const body = await request.json()

@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import type { QuizQuestion } from '@/lib/types/quiz-session'
@@ -29,7 +28,6 @@ export function QuestionCard({
   isLastQuestion = false,
 }: QuestionCardProps) {
   const isSingleChoice = question.questionType === 'SINGLE_CHOICE'
-  const isMultipleChoice = question.questionType === 'MULTIPLE_CHOICE'
 
   const handleOptionSelect = (optionId: string) => {
     if (isSingleChoice) {
