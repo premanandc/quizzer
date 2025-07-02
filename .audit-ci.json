@@ -1,0 +1,16 @@
+{
+  "moderate": true,
+  "allowlist": [],
+  "advisories": [],
+  "report": true,
+  "output-format": "text",
+  "summary": true,
+  "show-found": true,
+  "show-not-found": false,
+  "registry": "https://registry.npmjs.org/",
+  "retry": {
+    "count": 5,
+    "delay": 3000,
+    "factor": 2
+  }
+}

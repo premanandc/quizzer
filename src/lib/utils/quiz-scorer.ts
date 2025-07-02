@@ -25,10 +25,10 @@ export function calculateQuizScore(
   }
 
   let correctCount = 0
+  const userAnswersMap = new Map(Object.entries(userAnswers))
 
-  for (const questionId of Object.keys(correctAnswers)) {
-    const userAnswer = userAnswers[questionId] || []
-    const correctAnswer = correctAnswers[questionId] || []
+  for (const [questionId, correctAnswer] of Object.entries(correctAnswers)) {
+    const userAnswer = userAnswersMap.get(questionId) || []
 
     if (arraysEqual(userAnswer.sort(), correctAnswer.sort())) {
       correctCount++
@@ -46,11 +46,8 @@ export function calculateQuizScore(
 }
 
 export function arraysEqual(a: string[], b: string[]): boolean {
-  if (a.length !== b.length) {
-    return false
-  }
-
-  return a.every((val, index) => val === b[index])
+  if (a.length !== b.length) return false
+  return JSON.stringify([...a].sort()) === JSON.stringify([...b].sort())
 }
 
 export function getScoreGrade(percentage: number): string {

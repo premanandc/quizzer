@@ -1,4 +1,8 @@
-import type { ImportQuiz, QuizValidationError } from '@/lib/types/quiz-import'
+import type {
+  ImportQuiz,
+  ImportQuizOption,
+  QuizValidationError,
+} from '@/lib/types/quiz-import'
 
 export class QuizValidator {
   private errors: QuizValidationError[] = []
@@ -28,7 +32,11 @@ export class QuizValidator {
     }
 
     if (typeof quiz.quiz_title !== 'string') {
-      this.addError('quiz_title', 'Quiz title must be a string', quiz.quiz_title)
+      this.addError(
+        'quiz_title',
+        'Quiz title must be a string',
+        quiz.quiz_title
+      )
       return
     }
 
@@ -76,48 +84,85 @@ export class QuizValidator {
 
     // Validate question ID
     if (!q.id || typeof q.id !== 'string') {
-      this.addError(`questions[${index}].id`, 'Question ID is required and must be a string')
+      this.addError(
+        `questions[${index}].id`,
+        'Question ID is required and must be a string'
+      )
     }
 
     // Validate question type
-    if (!q.question_type || !['single_choice', 'multiple_choice'].includes(q.question_type as string)) {
-      this.addError(`questions[${index}].question_type`, 'Question type must be "single_choice" or "multiple_choice"')
+    if (
+      !q.question_type ||
+      !['single_choice', 'multiple_choice'].includes(q.question_type as string)
+    ) {
+      this.addError(
+        `questions[${index}].question_type`,
+        'Question type must be "single_choice" or "multiple_choice"'
+      )
     }
 
     // Validate question text
     if (!q.question_text || typeof q.question_text !== 'string') {
-      this.addError(`questions[${index}].question_text`, 'Question text is required and must be a string')
+      this.addError(
+        `questions[${index}].question_text`,
+        'Question text is required and must be a string'
+      )
     } else if (q.question_text.trim().length === 0) {
-      this.addError(`questions[${index}].question_text`, 'Question text cannot be empty')
+      this.addError(
+        `questions[${index}].question_text`,
+        'Question text cannot be empty'
+      )
     }
 
     // Validate options
     this.validateOptions(q.options, index, q.question_type as string)
   }
 
-  private validateOptions(options: unknown, questionIndex: number, questionType: string) {
+  private validateOptions(
+    options: unknown,
+    questionIndex: number,
+    questionType: string
+  ) {
     if (!Array.isArray(options)) {
-      this.addError(`questions[${questionIndex}].options`, 'Options must be an array')
+      this.addError(
+        `questions[${questionIndex}].options`,
+        'Options must be an array'
+      )
       return
     }
 
     if (options.length < 2) {
-      this.addError(`questions[${questionIndex}].options`, 'At least 2 options are required')
+      this.addError(
+        `questions[${questionIndex}].options`,
+        'At least 2 options are required'
+      )
       return
     }
 
     if (options.length > 6) {
-      this.addError(`questions[${questionIndex}].options`, 'Maximum 6 options allowed')
+      this.addError(
+        `questions[${questionIndex}].options`,
+        'Maximum 6 options allowed'
+      )
     }
 
-    const correctOptions = options.filter((opt: any) => opt?.is_correct === true)
-    
+    const correctOptions = options.filter(
+      (opt: unknown): opt is ImportQuizOption =>
+        this.isValidOption(opt) && (opt as ImportQuizOption).is_correct === true
+    )
+
     if (questionType === 'single_choice' && correctOptions.length !== 1) {
-      this.addError(`questions[${questionIndex}].options`, 'Single choice questions must have exactly one correct option')
+      this.addError(
+        `questions[${questionIndex}].options`,
+        'Single choice questions must have exactly one correct option'
+      )
     }
 
     if (questionType === 'multiple_choice' && correctOptions.length < 1) {
-      this.addError(`questions[${questionIndex}].options`, 'Multiple choice questions must have at least one correct option')
+      this.addError(
+        `questions[${questionIndex}].options`,
+        'Multiple choice questions must have at least one correct option'
+      )
     }
 
     options.forEach((option, optionIndex) => {
@@ -125,16 +170,31 @@ export class QuizValidator {
     })
 
     // Check for duplicate option IDs
-    const optionIds = options.map((opt: any) => opt?.option_id).filter(Boolean)
+    const optionIds = options
+      .filter((opt: unknown): opt is ImportQuizOption =>
+        this.isValidOption(opt)
+      )
+      .map((opt: ImportQuizOption) => opt.option_id)
+      .filter(Boolean)
     const uniqueIds = new Set(optionIds)
     if (optionIds.length !== uniqueIds.size) {
-      this.addError(`questions[${questionIndex}].options`, 'Option IDs must be unique within a question')
+      this.addError(
+        `questions[${questionIndex}].options`,
+        'Option IDs must be unique within a question'
+      )
     }
   }
 
-  private validateOption(option: unknown, questionIndex: number, optionIndex: number) {
+  private validateOption(
+    option: unknown,
+    questionIndex: number,
+    optionIndex: number
+  ) {
     if (!this.isObject(option)) {
-      this.addError(`questions[${questionIndex}].options[${optionIndex}]`, 'Option must be an object')
+      this.addError(
+        `questions[${questionIndex}].options[${optionIndex}]`,
+        'Option must be an object'
+      )
       return
     }
 
@@ -142,11 +202,17 @@ export class QuizValidator {
     const prefix = `questions[${questionIndex}].options[${optionIndex}]`
 
     if (!opt.option_id || typeof opt.option_id !== 'string') {
-      this.addError(`${prefix}.option_id`, 'Option ID is required and must be a string')
+      this.addError(
+        `${prefix}.option_id`,
+        'Option ID is required and must be a string'
+      )
     }
 
     if (!opt.option_text || typeof opt.option_text !== 'string') {
-      this.addError(`${prefix}.option_text`, 'Option text is required and must be a string')
+      this.addError(
+        `${prefix}.option_text`,
+        'Option text is required and must be a string'
+      )
     } else if (opt.option_text.trim().length === 0) {
       this.addError(`${prefix}.option_text`, 'Option text cannot be empty')
     }
@@ -156,7 +222,10 @@ export class QuizValidator {
     }
 
     if (!opt.explanation || typeof opt.explanation !== 'string') {
-      this.addError(`${prefix}.explanation`, 'Explanation is required and must be a string')
+      this.addError(
+        `${prefix}.explanation`,
+        'Explanation is required and must be a string'
+      )
     } else if (opt.explanation.trim().length === 0) {
       this.addError(`${prefix}.explanation`, 'Explanation cannot be empty')
     }
@@ -164,6 +233,18 @@ export class QuizValidator {
 
   private isObject(value: unknown): value is Record<string, unknown> {
     return value !== null && typeof value === 'object' && !Array.isArray(value)
+  }
+
+  private isValidOption(value: unknown): value is ImportQuizOption {
+    if (!this.isObject(value)) return false
+
+    const obj = value as Record<string, unknown>
+    return (
+      typeof obj.option_id === 'string' &&
+      typeof obj.option_text === 'string' &&
+      typeof obj.is_correct === 'boolean' &&
+      typeof obj.explanation === 'string'
+    )
   }
 
   private addError(field: string, message: string, value?: unknown) {

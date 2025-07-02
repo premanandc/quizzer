@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { useSession } from 'next-auth/react'
 import {
   createSession,
   updateSessionAnswer as updateAnswer,
@@ -19,7 +18,6 @@ import type {
 } from '@/lib/types/quiz-session'
 
 export function useQuizSession() {
-  const { data: _sessionData } = useSession()
   const [quiz, setQuiz] = useState<QuizDetails | null>(null)
   const [session, setSession] = useState<QuizSession | null>(null)
   const [result, setResult] = useState<QuizAttemptResult | null>(null)
@@ -29,14 +27,14 @@ export function useQuizSession() {
   const startQuiz = useCallback(async (quizId: string) => {
     setIsLoading(true)
     setError(null)
-    
+
     try {
       // Fetch quiz data from API
       const response = await fetch(`/api/quiz/${quizId}`)
       if (!response.ok) {
         throw new Error(`Quiz with ID "${quizId}" not found`)
       }
-      
+
       const quizData = await response.json()
       setQuiz(quizData)
       const newSession = createSession(quizData)
@@ -48,41 +46,47 @@ export function useQuizSession() {
     }
   }, [])
 
-  const updateAnswerCallback = useCallback((questionId: string, selectedOptions: string[]) => {
-    if (!session) return
-    
-    const updatedSession = updateAnswer(session, questionId, selectedOptions)
-    setSession(updatedSession)
-  }, [session])
+  const updateAnswerCallback = useCallback(
+    (questionId: string, selectedOptions: string[]) => {
+      if (!session) return
+
+      const updatedSession = updateAnswer(session, questionId, selectedOptions)
+      setSession(updatedSession)
+    },
+    [session]
+  )
 
   const nextQuestion = useCallback(() => {
     if (!session) return
-    
+
     const updatedSession = moveToNextQuestion(session)
     setSession(updatedSession)
   }, [session])
 
   const previousQuestion = useCallback(() => {
     if (!session) return
-    
+
     const updatedSession = moveToPreviousQuestion(session)
     setSession(updatedSession)
   }, [session])
 
-  const goToQuestion = useCallback((questionIndex: number) => {
-    if (!session) return
-    
-    const updatedSession = jumpToQuestion(session, questionIndex)
-    setSession(updatedSession)
-  }, [session])
+  const goToQuestion = useCallback(
+    (questionIndex: number) => {
+      if (!session) return
+
+      const updatedSession = jumpToQuestion(session, questionIndex)
+      setSession(updatedSession)
+    },
+    [session]
+  )
 
   const submitQuiz = useCallback(async () => {
     if (!session || !quiz) return
-    
+
     setIsLoading(true)
     try {
       const completedSession = completeSession(session)
-      
+
       const response = await fetch(`/api/quiz/${quiz.id}/submit`, {
         method: 'POST',
         headers: {
@@ -93,11 +97,11 @@ export function useQuizSession() {
           quiz,
         }),
       })
-      
+
       if (!response.ok) {
         throw new Error('Failed to submit quiz')
       }
-      
+
       const quizResult = await response.json()
       setResult(quizResult)
     } catch (err) {

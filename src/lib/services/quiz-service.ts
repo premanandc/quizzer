@@ -1,10 +1,10 @@
 import { prisma } from '@/lib/db'
 import { calculateQuizScore, getScoreGrade } from '@/lib/utils/quiz-scorer'
 import type {
+  QuestionResult,
+  QuizAttemptResult,
   QuizDetails,
   QuizSession,
-  QuizAttemptResult,
-  QuestionResult,
 } from '@/lib/types/quiz-session'
 
 export class QuizService {
@@ -31,12 +31,12 @@ export class QuizService {
       description: quiz.description ?? undefined,
       isActive: quiz.isActive,
       totalQuestions: quiz.questions.length,
-      questions: quiz.questions.map(question => ({
+      questions: quiz.questions.map((question) => ({
         id: question.id,
         questionText: question.questionText,
         questionType: question.questionType,
         orderIndex: question.orderIndex,
-        options: question.options.map(option => ({
+        options: question.options.map((option) => ({
           id: option.id,
           optionText: option.optionText,
           isCorrect: option.isCorrect,
@@ -47,7 +47,9 @@ export class QuizService {
     }
   }
 
-  async getAvailableQuizzes(): Promise<Array<{ id: string; title: string; questionCount: number }>> {
+  async getAvailableQuizzes(): Promise<
+    Array<{ id: string; title: string; questionCount: number }>
+  > {
     const quizzes = await prisma.quiz.findMany({
       where: { isActive: true },
       include: {
@@ -58,7 +60,7 @@ export class QuizService {
       orderBy: { createdAt: 'desc' },
     })
 
-    return quizzes.map(quiz => ({
+    return quizzes.map((quiz) => ({
       id: quiz.id,
       title: quiz.title,
       questionCount: quiz._count.questions,
@@ -93,7 +95,10 @@ export class QuizService {
   }
 
   nextQuestion(session: QuizSession): QuizSession {
-    const nextIndex = Math.min(session.currentQuestionIndex + 1, session.totalQuestions - 1)
+    const nextIndex = Math.min(
+      session.currentQuestionIndex + 1,
+      session.totalQuestions - 1
+    )
     return {
       ...session,
       currentQuestionIndex: nextIndex,
@@ -109,7 +114,10 @@ export class QuizService {
   }
 
   goToQuestion(session: QuizSession, questionIndex: number): QuizSession {
-    const validIndex = Math.max(0, Math.min(questionIndex, session.totalQuestions - 1))
+    const validIndex = Math.max(
+      0,
+      Math.min(questionIndex, session.totalQuestions - 1)
+    )
     return {
       ...session,
       currentQuestionIndex: validIndex,
@@ -118,7 +126,9 @@ export class QuizService {
 
   completeSession(session: QuizSession): QuizSession {
     const endTime = new Date()
-    const timeSpent = Math.floor((endTime.getTime() - session.startTime.getTime()) / 1000)
+    const timeSpent = Math.floor(
+      (endTime.getTime() - session.startTime.getTime()) / 1000
+    )
 
     return {
       ...session,
@@ -136,22 +146,27 @@ export class QuizService {
 
     // Calculate correct answers from quiz data
     const correctAnswers: Record<string, string[]> = {}
-    quiz.questions.forEach(question => {
-      const correctOptions = question.options
-        .filter(option => option.isCorrect)
-        .map(option => option.id)
-      correctAnswers[question.id] = correctOptions
+    quiz.questions.forEach((question) => {
+      correctAnswers[question.id] = question.options
+        .filter((option) => option.isCorrect)
+        .map((option) => option.id)
     })
 
     // Calculate score
-    const scoreResult = calculateQuizScore(completedSession.answers, correctAnswers)
+    const scoreResult = calculateQuizScore(
+      completedSession.answers,
+      correctAnswers
+    )
     const grade = getScoreGrade(scoreResult.percentage)
 
     // Create question results
-    const questionResults: QuestionResult[] = quiz.questions.map(question => {
+    const questionResults: QuestionResult[] = quiz.questions.map((question) => {
       const userAnswers = completedSession.answers[question.id] || []
       const correctAnswerIds = correctAnswers[question.id] || []
-      const isCorrect = this.arraysEqual(userAnswers.sort(), correctAnswerIds.sort())
+      const isCorrect = this.arraysEqual(
+        userAnswers.sort(),
+        correctAnswerIds.sort()
+      )
 
       return {
         questionId: question.id,
@@ -159,7 +174,9 @@ export class QuizService {
         userAnswers,
         correctAnswers: correctAnswerIds,
         isCorrect,
-        selectedOptions: question.options.filter(opt => userAnswers.includes(opt.id)),
+        selectedOptions: question.options.filter((opt) =>
+          userAnswers.includes(opt.id)
+        ),
         allOptions: question.options,
       }
     })
@@ -189,7 +206,7 @@ export class QuizService {
     result: QuizAttemptResult,
     userId: string
   ) {
-    return await prisma.$transaction(async (tx) => {
+    return prisma.$transaction(async (tx) => {
       // Create quiz attempt
       const attempt = await tx.quizAttempt.create({
         data: {
@@ -221,7 +238,14 @@ export class QuizService {
   }
 
   private arraysEqual(a: string[], b: string[]): boolean {
-    return a.length === b.length && a.every((val, index) => val === b[index])
+    if (a.length !== b.length) return false
+
+    // Convert to Sets for order-independent comparison
+    const setA = new Set(a)
+    const setB = new Set(b)
+
+    // Check if all elements in setA exist in setB and vice versa
+    return setA.size === setB.size && [...setA].every((val) => setB.has(val))
   }
 
   getSessionProgress(session: QuizSession): {

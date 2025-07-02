@@ -20,14 +20,13 @@ const config = {
     low: 60,
     break: 50,
   },
-  checkers: ['typescript'],
-  tsconfigFile: 'tsconfig.json',
+  checkers: [],
   htmlReporter: {
     fileName: 'reports/mutation/mutation.html',
   },
   timeoutMS: 60000,
   concurrency: 1,
-  disableTypeChecks: false,
+  disableTypeChecks: true,
   vitest: {
     configFile: 'vitest.config.ts',
   },

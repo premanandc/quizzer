@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { SignInButton } from '@/components/auth/signin-button'
+import { SignInForm } from '@/components/auth/signin-form'
 import Link from 'next/link'
 
 export default function SignInPage() {
@@ -9,21 +9,27 @@ export default function SignInPage() {
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Sign In to Quizzer</CardTitle>
           <p className="text-gray-600">
-            Choose your preferred sign-in method
+            Enter your email and password to sign in
           </p>
         </CardHeader>
         <CardContent className="space-y-4">
-          <SignInButton provider="github" className="w-full">
-            Continue with GitHub
-          </SignInButton>
-          <SignInButton provider="google" className="w-full">
-            Continue with Google
-          </SignInButton>
-          
-          <div className="text-center text-sm text-gray-600">
-            <Link href="/" className="hover:text-blue-600">
-              ← Back to Home
-            </Link>
+          <SignInForm />
+
+          <div className="text-center text-sm text-gray-600 space-y-2">
+            <div>
+              Don&apos;t have an account?{' '}
+              <Link
+                href="/auth/signup"
+                className="text-blue-600 hover:underline"
+              >
+                Sign up here
+              </Link>
+            </div>
+            <div>
+              <Link href="/" className="hover:text-blue-600">
+                ← Back to Home
+              </Link>
+            </div>
           </div>
         </CardContent>
       </Card>

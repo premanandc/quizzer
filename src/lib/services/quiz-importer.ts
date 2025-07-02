@@ -15,7 +15,9 @@ export class QuizImporter {
         return {
           success: false,
           message: 'Invalid JSON format',
-          errors: [error instanceof Error ? error.message : 'JSON parsing failed'],
+          errors: [
+            error instanceof Error ? error.message : 'JSON parsing failed',
+          ],
         }
       }
 
@@ -24,7 +26,9 @@ export class QuizImporter {
         return {
           success: false,
           message: 'Quiz validation failed',
-          errors: this.validator.getErrors().map(err => `${err.field}: ${err.message}`),
+          errors: this.validator
+            .getErrors()
+            .map((err) => `${err.field}: ${err.message}`),
         }
       }
 
@@ -42,7 +46,9 @@ export class QuizImporter {
       return {
         success: false,
         message: 'Import failed',
-        errors: [error instanceof Error ? error.message : 'Unknown error occurred'],
+        errors: [
+          error instanceof Error ? error.message : 'Unknown error occurred',
+        ],
       }
     }
   }
@@ -58,22 +64,21 @@ export class QuizImporter {
       })
 
       // Create questions and options
-      for (let i = 0; i < quiz.questions.length; i++) {
-        const question = quiz.questions[i]
-        
+      for (const [i, question] of quiz.questions.entries()) {
         const createdQuestion = await tx.quizQuestion.create({
           data: {
             quizId: createdQuiz.id,
             questionText: question.question_text,
-            questionType: question.question_type === 'single_choice' ? 'SINGLE_CHOICE' : 'MULTIPLE_CHOICE',
+            questionType:
+              question.question_type === 'single_choice'
+                ? 'SINGLE_CHOICE'
+                : 'MULTIPLE_CHOICE',
             orderIndex: i,
           },
         })
 
         // Create options
-        for (let j = 0; j < question.options.length; j++) {
-          const option = question.options[j]
-          
+        for (const [j, option] of question.options.entries()) {
           await tx.quizOption.create({
             data: {
               questionId: createdQuestion.id,
@@ -90,7 +95,9 @@ export class QuizImporter {
     })
   }
 
-  async listQuizzes(): Promise<Array<{ id: string; title: string; questionCount: number; createdAt: Date }>> {
+  async listQuizzes(): Promise<
+    Array<{ id: string; title: string; questionCount: number; createdAt: Date }>
+  > {
     const quizzes = await prisma.quiz.findMany({
       include: {
         _count: {
@@ -100,7 +107,7 @@ export class QuizImporter {
       orderBy: { createdAt: 'desc' },
     })
 
-    return quizzes.map(quiz => ({
+    return quizzes.map((quiz) => ({
       id: quiz.id,
       title: quiz.title,
       questionCount: quiz._count.questions,
@@ -127,11 +134,14 @@ export class QuizImporter {
 
     return {
       quiz_title: quiz.title,
-      questions: quiz.questions.map(question => ({
+      questions: quiz.questions.map((question) => ({
         id: `Q${question.orderIndex + 1}`,
-        question_type: question.questionType === 'SINGLE_CHOICE' ? 'single_choice' : 'multiple_choice',
+        question_type:
+          question.questionType === 'SINGLE_CHOICE'
+            ? 'single_choice'
+            : 'multiple_choice',
         question_text: question.questionText,
-        options: question.options.map(option => ({
+        options: question.options.map((option) => ({
           option_id: String.fromCharCode(65 + option.orderIndex), // A, B, C, D...
           option_text: option.optionText,
           is_correct: option.isCorrect,

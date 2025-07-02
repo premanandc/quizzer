@@ -1,0 +1,377 @@
+06:36:42 (53221) DEBUG ConfigReader Loading config from stryker.conf.mjs
+06:36:42 (53221) DEBUG ConfigReader Loaded config: {
+  "packageManager": "npm",
+  "reporters": [
+    "html",
+    "clear-text",
+    "progress"
+  ],
+  "testRunner": "vitest",
+  "coverageAnalysis": "off",
+  "mutate": [
+    "src/lib/utils/**/*.ts",
+    "!src/lib/types/**",
+    "!src/generated/**",
+    "!src/**/*.test.ts",
+    "!src/**/*.test.tsx",
+    "!src/**/*.spec.ts",
+    "!src/**/*.spec.tsx"
+  ],
+  "thresholds": {
+    "high": 80,
+    "low": 60,
+    "break": 50
+  },
+  "checkers": [
+    "typescript"
+  ],
+  "tsconfigFile": "tsconfig.json",
+  "htmlReporter": {
+    "fileName": "reports/mutation/mutation.html"
+  },
+  "timeoutMS": 60000,
+  "concurrency": 1,
+  "disableTypeChecks": false,
+  "vitest": {
+    "configFile": "vitest.config.ts"
+  },
+  "fileLogLevel": "trace",
+  "logLevel": "debug",
+  "allowConsoleColors": true,
+  "checkerNodeArgs": [],
+  "commandRunner": {
+    "command": "npm test"
+  },
+  "clearTextReporter": {
+    "allowColor": true,
+    "allowEmojis": false,
+    "logTests": true,
+    "maxTestsToLog": 3,
+    "reportTests": true,
+    "reportMutants": true,
+    "reportScoreTable": true,
+    "skipFull": false
+  },
+  "dashboard": {
+    "baseUrl": "https://dashboard.stryker-mutator.io/api/reports",
+    "reportType": "full"
+  },
+  "dryRunOnly": false,
+  "eventReporter": {
+    "baseDir": "reports/mutation/events"
+  },
+  "ignorePatterns": [],
+  "ignoreStatic": false,
+  "incremental": false,
+  "incrementalFile": "reports/stryker-incremental.json",
+  "force": false,
+  "inPlace": false,
+  "maxConcurrentTestRunners": 9007199254740991,
+  "maxTestRunnerReuse": 0,
+  "mutator": {
+    "plugins": null,
+    "excludedMutations": []
+  },
+  "plugins": [
+    "@stryker-mutator/*"
+  ],
+  "appendPlugins": [],
+  "jsonReporter": {
+    "fileName": "reports/mutation/mutation.json"
+  },
+  "symlinkNodeModules": true,
+  "tempDirName": ".stryker-tmp",
+  "cleanTempDir": true,
+  "testRunnerNodeArgs": [],
+  "timeoutFactor": 1.5,
+  "dryRunTimeoutMinutes": 5,
+  "warnings": true,
+  "disableBail": false,
+  "allowEmpty": false,
+  "ignorers": []
+}
+06:36:42 (53221) DEBUG PluginLoader Loading @stryker-mutator/* from /Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator
+06:36:42 (53221) DEBUG PluginLoader Loading plugin "@stryker-mutator/typescript-checker" (matched with expression @stryker-mutator/*)
+06:36:42 (53221) DEBUG PluginLoader Loading plugin "@stryker-mutator/vitest-runner" (matched with expression @stryker-mutator/*)
+06:36:42 (53221) DEBUG PluginLoader Loading plugin @stryker-mutator/typescript-checker
+06:36:42 (53221) DEBUG PluginLoader Loading plugin @stryker-mutator/vitest-runner
+06:36:42 (53221) DEBUG PluginLoader Loading plugin file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/instrumenter/dist/src/frameworks/index.js
+06:36:42 (53221) DEBUG PluginLoader Loading plugin file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/core/dist/src/reporters/index.js
+06:36:42 (53221) DEBUG MetaSchemaBuilder Contributing 2 schemas from plugins to options validation.
+06:36:42 (53221) WARN ProjectReader Glob pattern "!src/**/*.spec.ts" did not exclude any files.
+06:36:42 (53221) WARN ProjectReader Glob pattern "!src/**/*.spec.tsx" did not exclude any files.
+06:36:42 (53221) INFO ProjectReader Found 2 of 217 file(s) to be mutated.
+06:36:42 (53221) DEBUG ProjectReader All input files: [
+  "/Users/premanandc/Projects/quizzer/.claude/settings.local.json",
+  "/Users/premanandc/Projects/quizzer/.env",
+  "/Users/premanandc/Projects/quizzer/.env.example",
+  "/Users/premanandc/Projects/quizzer/.env.local",
+  "/Users/premanandc/Projects/quizzer/.eslintignore",
+  "/Users/premanandc/Projects/quizzer/.eslintrc.json",
+  "/Users/premanandc/Projects/quizzer/.github/workflows/ci.yml",
+  "/Users/premanandc/Projects/quizzer/.gitignore",
+  "/Users/premanandc/Projects/quizzer/.husky/_/.gitignore",
+  "/Users/premanandc/Projects/quizzer/.husky/_/applypatch-msg",
+  "/Users/premanandc/Projects/quizzer/.husky/_/commit-msg",
+  "/Users/premanandc/Projects/quizzer/.husky/_/h",
+  "/Users/premanandc/Projects/quizzer/.husky/_/husky.sh",
+  "/Users/premanandc/Projects/quizzer/.husky/_/post-applypatch",
+  "/Users/premanandc/Projects/quizzer/.husky/_/post-checkout",
+  "/Users/premanandc/Projects/quizzer/.husky/_/post-commit",
+  "/Users/premanandc/Projects/quizzer/.husky/_/post-merge",
+  "/Users/premanandc/Projects/quizzer/.husky/_/post-rewrite",
+  "/Users/premanandc/Projects/quizzer/.husky/_/pre-applypatch",
+  "/Users/premanandc/Projects/quizzer/.husky/_/pre-auto-gc",
+  "/Users/premanandc/Projects/quizzer/.husky/_/pre-commit",
+  "/Users/premanandc/Projects/quizzer/.husky/_/pre-merge-commit",
+  "/Users/premanandc/Projects/quizzer/.husky/_/pre-push",
+  "/Users/premanandc/Projects/quizzer/.husky/_/pre-rebase",
+  "/Users/premanandc/Projects/quizzer/.husky/_/prepare-commit-msg",
+  "/Users/premanandc/Projects/quizzer/.husky/commit-msg",
+  "/Users/premanandc/Projects/quizzer/.husky/pre-commit",
+  "/Users/premanandc/Projects/quizzer/.idea/.gitignore",
+  "/Users/premanandc/Projects/quizzer/.idea/dataSources/9f3415eb-f79d-4a02-b7ab-d2a594e790cb/storage_v2/_src_/schema/main.uQUzAA.meta",
+  "/Users/premanandc/Projects/quizzer/.idea/dataSources/9f3415eb-f79d-4a02-b7ab-d2a594e790cb.xml",
+  "/Users/premanandc/Projects/quizzer/.idea/workspace.xml",
+  "/Users/premanandc/Projects/quizzer/.prettierrc",
+  "/Users/premanandc/Projects/quizzer/README.md",
+  "/Users/premanandc/Projects/quizzer/commitlint.config.js",
+  "/Users/premanandc/Projects/quizzer/coverage/base.css",
+  "/Users/premanandc/Projects/quizzer/coverage/block-navigation.js",
+  "/Users/premanandc/Projects/quizzer/coverage/clover.xml",
+  "/Users/premanandc/Projects/quizzer/coverage/coverage-final.json",
+  "/Users/premanandc/Projects/quizzer/coverage/favicon.png",
+  "/Users/premanandc/Projects/quizzer/coverage/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/prettify.css",
+  "/Users/premanandc/Projects/quizzer/coverage/prettify.js",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/commitlint.config.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/next.config.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/playwright.config.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/postcss.config.mjs.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/scripts/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/scripts/quiz-cli.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/api/auth/[...nextauth]/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/api/auth/[...nextauth]/route.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/api/quiz/[id]/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/api/quiz/[id]/route.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/api/quiz/[id]/submit/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/api/quiz/[id]/submit/route.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/auth/error/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/auth/error/page.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/auth/signin/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/auth/signin/page.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/layout.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/leaderboard/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/leaderboard/page.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/page.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/profile/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/profile/page.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/quiz/[id]/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/quiz/[id]/leaderboard/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/quiz/[id]/leaderboard/page.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/quiz/[id]/page.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/quizzes/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/app/quizzes/page.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/auth.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/auth/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/auth/signin-button.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/auth/signout-button.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/auth/user-avatar.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/providers/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/providers/session-provider.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/quiz/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/quiz/progress-bar.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/quiz/question-card.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/quiz/quiz-interface.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/quiz/quiz-results.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/ui/button.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/ui/card.tsx.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/components/ui/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/client.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/default.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/edge.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/index-browser.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/index.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/runtime/edge-esm.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/runtime/edge.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/runtime/index-browser.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/runtime/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/runtime/library.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/runtime/react-native.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/runtime/wasm-compiler-edge.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/runtime/wasm-engine-edge.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/generated/prisma/wasm.js.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/database.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/db.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/hooks/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/hooks/use-quiz-session.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/services/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/services/leaderboard-service.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/services/quiz-importer.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/services/quiz-service.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/services/quiz-validator.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/types/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/types/quiz-import.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/types/quiz-session.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/types/quiz.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/types/user.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/utils/index.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/utils/quiz-scorer.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/src/lib/utils/quiz-session-utils.ts.html",
+  "/Users/premanandc/Projects/quizzer/coverage/quizzer/stryker.conf.mjs.html",
+  "/Users/premanandc/Projects/quizzer/coverage/sort-arrow-sprite.png",
+  "/Users/premanandc/Projects/quizzer/coverage/sorter.js",
+  "/Users/premanandc/Projects/quizzer/data/invalid-quiz.json",
+  "/Users/premanandc/Projects/quizzer/data/prompting-basics.json",
+  "/Users/premanandc/Projects/quizzer/docs/DATABASE.md",
+  "/Users/premanandc/Projects/quizzer/docs/QUALITY.md",
+  "/Users/premanandc/Projects/quizzer/eslint.config.mjs",
+  "/Users/premanandc/Projects/quizzer/next-env.d.ts",
+  "/Users/premanandc/Projects/quizzer/next.config.ts",
+  "/Users/premanandc/Projects/quizzer/package-lock.json",
+  "/Users/premanandc/Projects/quizzer/package.json",
+  "/Users/premanandc/Projects/quizzer/playwright-report/index.html",
+  "/Users/premanandc/Projects/quizzer/playwright.config.ts",
+  "/Users/premanandc/Projects/quizzer/postcss.config.mjs",
+  "/Users/premanandc/Projects/quizzer/prisma/dev.db",
+  "/Users/premanandc/Projects/quizzer/prisma/migrations/20250624222807_init/migration.sql",
+  "/Users/premanandc/Projects/quizzer/prisma/migrations/20250625001615_add_nextauth_tables/migration.sql",
+  "/Users/premanandc/Projects/quizzer/prisma/migrations/migration_lock.toml",
+  "/Users/premanandc/Projects/quizzer/prisma/schema.prisma",
+  "/Users/premanandc/Projects/quizzer/public/file.svg",
+  "/Users/premanandc/Projects/quizzer/public/globe.svg",
+  "/Users/premanandc/Projects/quizzer/public/next.svg",
+  "/Users/premanandc/Projects/quizzer/public/vercel.svg",
+  "/Users/premanandc/Projects/quizzer/public/window.svg",
+  "/Users/premanandc/Projects/quizzer/scripts/quiz-cli.ts",
+  "/Users/premanandc/Projects/quizzer/src/__tests__/example.test.ts",
+  "/Users/premanandc/Projects/quizzer/src/__tests__/quiz-interface.test.tsx",
+  "/Users/premanandc/Projects/quizzer/src/__tests__/quiz-scorer.test.ts",
+  "/Users/premanandc/Projects/quizzer/src/__tests__/quiz-validator.test.ts",
+  "/Users/premanandc/Projects/quizzer/src/__tests__/setup.ts",
+  "/Users/premanandc/Projects/quizzer/src/app/api/auth/[...nextauth]/route.ts",
+  "/Users/premanandc/Projects/quizzer/src/app/api/quiz/[id]/route.ts",
+  "/Users/premanandc/Projects/quizzer/src/app/api/quiz/[id]/submit/route.ts",
+  "/Users/premanandc/Projects/quizzer/src/app/auth/error/page.tsx",
+  "/Users/premanandc/Projects/quizzer/src/app/auth/signin/page.tsx",
+  "/Users/premanandc/Projects/quizzer/src/app/favicon.ico",
+  "/Users/premanandc/Projects/quizzer/src/app/globals.css",
+  "/Users/premanandc/Projects/quizzer/src/app/layout.tsx",
+  "/Users/premanandc/Projects/quizzer/src/app/leaderboard/page.tsx",
+  "/Users/premanandc/Projects/quizzer/src/app/page.tsx",
+  "/Users/premanandc/Projects/quizzer/src/app/profile/page.tsx",
+  "/Users/premanandc/Projects/quizzer/src/app/quiz/[id]/leaderboard/page.tsx",
+  "/Users/premanandc/Projects/quizzer/src/app/quiz/[id]/page.tsx",
+  "/Users/premanandc/Projects/quizzer/src/app/quizzes/page.tsx",
+  "/Users/premanandc/Projects/quizzer/src/auth.ts",
+  "/Users/premanandc/Projects/quizzer/src/components/auth/signin-button.tsx",
+  "/Users/premanandc/Projects/quizzer/src/components/auth/signout-button.tsx",
+  "/Users/premanandc/Projects/quizzer/src/components/auth/user-avatar.tsx",
+  "/Users/premanandc/Projects/quizzer/src/components/providers/session-provider.tsx",
+  "/Users/premanandc/Projects/quizzer/src/components/quiz/progress-bar.tsx",
+  "/Users/premanandc/Projects/quizzer/src/components/quiz/question-card.tsx",
+  "/Users/premanandc/Projects/quizzer/src/components/quiz/quiz-interface.tsx",
+  "/Users/premanandc/Projects/quizzer/src/components/quiz/quiz-results.tsx",
+  "/Users/premanandc/Projects/quizzer/src/components/ui/button.tsx",
+  "/Users/premanandc/Projects/quizzer/src/components/ui/card.tsx",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/client.d.ts",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/client.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/default.d.ts",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/default.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/edge.d.ts",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/edge.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/index-browser.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/index.d.ts",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/index.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/libquery_engine-darwin-arm64.dylib.node",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/package.json",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/runtime/edge-esm.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/runtime/edge.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/runtime/index-browser.d.ts",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/runtime/index-browser.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/runtime/library.d.ts",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/runtime/library.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/runtime/react-native.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/runtime/wasm-compiler-edge.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/runtime/wasm-engine-edge.js",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/schema.prisma",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/wasm.d.ts",
+  "/Users/premanandc/Projects/quizzer/src/generated/prisma/wasm.js",
+  "/Users/premanandc/Projects/quizzer/src/lib/database.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/db.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/hooks/use-quiz-session.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/services/leaderboard-service.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/services/quiz-importer.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/services/quiz-service.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/services/quiz-validator.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/types/quiz-import.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/types/quiz-session.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/types/quiz.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/types/user.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/utils/quiz-scorer.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/utils/quiz-session-utils.ts",
+  "/Users/premanandc/Projects/quizzer/stryker.conf.mjs",
+  "/Users/premanandc/Projects/quizzer/test-results/.last-run.json",
+  "/Users/premanandc/Projects/quizzer/tsconfig.json",
+  "/Users/premanandc/Projects/quizzer/vitest.config.ts"
+]
+06:36:42 (53221) DEBUG ProjectReader Files to mutate: [
+  "/Users/premanandc/Projects/quizzer/src/lib/utils/quiz-scorer.ts",
+  "/Users/premanandc/Projects/quizzer/src/lib/utils/quiz-session-utils.ts"
+]
+06:36:42 (53221) DEBUG TemporaryDirectory Using temp directory "/Users/premanandc/Projects/quizzer/.stryker-tmp/sandbox-MqPx1v"
+06:36:42 (53221) DEBUG Instrumenter Instrumenting 2 source files with mutants
+06:36:42 (53221) DEBUG Instrumenter Instrumented src/lib/utils/quiz-scorer.ts (64 mutant(s))
+06:36:42 (53221) DEBUG Instrumenter Instrumented src/lib/utils/quiz-session-utils.ts (34 mutant(s))
+06:36:42 (53221) INFO Instrumenter Instrumented 2 source file(s) with 98 mutant(s)
+06:36:42 (53221) DEBUG TSConfigPreprocessor Rewriting file ProjectFile {
+  fs: [FileSystem],
+  name: '/Users/premanandc/Projects/quizzer/tsconfig.json',
+  mutate: false
+}
+06:36:42 (53221) INFO ConcurrencyTokenProvider Creating 1 checker process(es) and 1 test runner process(es).
+06:36:42 (53221) DEBUG ChildProcessProxy Started CheckerWorker in worker process 0 with pid 53235 
+06:36:43 (53235) DEBUG PluginLoader Loading plugin @stryker-mutator/typescript-checker
+06:36:43 (53235) DEBUG PluginLoader Loading plugin @stryker-mutator/vitest-runner
+06:36:43 (53235) DEBUG PluginLoader Loading plugin file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/instrumenter/dist/src/frameworks/index.js
+06:36:43 (53235) DEBUG PluginLoader Loading plugin file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/core/dist/src/reporters/index.js
+06:36:44 (53235) TRACE TypescriptChecker.HybridFileSystem Writing to file "/Users/premanandc/Projects/quizzer/tsconfig.tsbuildinfo"
+06:36:44 (53221) DEBUG Stryker Not removing the temp dir because an error occurred
+06:36:44 (53221) ERROR Stryker Unexpected error occurred while running Stryker StrykerError: Error: An error occurred during initialization of the "typescript" checker. Inner error: Error: Typescript error(s) found in dry run compilation: src/__tests__/quiz-interface.test.tsx(30,54): error TS2339: Property 'toBeInTheDocument' does not exist on type 'Assertion<HTMLElement>'.
+src/__tests__/quiz-interface.test.tsx(31,44): error TS2339: Property 'toBeInTheDocument' does not exist on type 'Assertion<HTMLElement>'.
+
+Error: Typescript error(s) found in dry run compilation: src/__tests__/quiz-interface.test.tsx(30,54): error TS2339: Property 'toBeInTheDocument' does not exist on type 'Assertion<HTMLElement>'.
+src/__tests__/quiz-interface.test.tsx(31,44): error TS2339: Property 'toBeInTheDocument' does not exist on type 'Assertion<HTMLElement>'.
+
+    at TypescriptChecker.init (file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/typescript-checker/dist/src/typescript-checker.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async CheckerWorker.init (file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/core/dist/src/checker/checker-worker.js:13:17)
+    at async ChildProcessProxyWorker.handleCall (file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/core/dist/src/child-proxy/child-process-proxy-worker.js:87:28)
+Error: An error occurred during initialization of the "typescript" checker. Inner error: Error: Typescript error(s) found in dry run compilation: src/__tests__/quiz-interface.test.tsx(30,54): error TS2339: Property 'toBeInTheDocument' does not exist on type 'Assertion<HTMLElement>'.
+src/__tests__/quiz-interface.test.tsx(31,44): error TS2339: Property 'toBeInTheDocument' does not exist on type 'Assertion<HTMLElement>'.
+
+Error: Typescript error(s) found in dry run compilation: src/__tests__/quiz-interface.test.tsx(30,54): error TS2339: Property 'toBeInTheDocument' does not exist on type 'Assertion<HTMLElement>'.
+src/__tests__/quiz-interface.test.tsx(31,44): error TS2339: Property 'toBeInTheDocument' does not exist on type 'Assertion<HTMLElement>'.
+
+    at TypescriptChecker.init (file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/typescript-checker/dist/src/typescript-checker.js:51:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async CheckerWorker.init (file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/core/dist/src/checker/checker-worker.js:13:17)
+    at async ChildProcessProxyWorker.handleCall (file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/core/dist/src/child-proxy/child-process-proxy-worker.js:87:28)
+    at CheckerWorker.init (file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/core/dist/src/checker/checker-worker.js:16:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async ChildProcessProxyWorker.handleCall (file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/core/dist/src/child-proxy/child-process-proxy-worker.js:87:28)
+    at ChildProcess.<anonymous> (file:///Users/premanandc/Projects/quizzer/node_modules/@stryker-mutator/core/dist/src/child-proxy/child-process-proxy.js:121:72)
+    at ChildProcess.emit (node:events:507:28)
+    at emit (node:internal/child_process:949:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:91:21) {
+  innerError: undefined
+}
+06:36:44 (53221) INFO Stryker This might be a known problem with a solution documented in our troubleshooting guide.
+06:36:44 (53221) INFO Stryker You can find it at https://stryker-mutator.io/docs/stryker-js/troubleshooting/
+06:36:44 (53221) DEBUG ChildProcessProxy Disposing of worker process 53235
+06:36:44 (53221) DEBUG ChildProcessProxy Kill 53235

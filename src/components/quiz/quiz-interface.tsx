@@ -39,7 +39,8 @@ export function QuizInterface({ quizId }: QuizInterfaceProps) {
         </CardHeader>
         <CardContent>
           <p className="text-gray-600 mb-4">
-            Click the button below to begin your quiz. Make sure you have enough time to complete it.
+            Click the button below to begin your quiz. Make sure you have enough
+            time to complete it.
           </p>
           <Button onClick={() => startQuiz(quizId)} size="lg">
             Start Quiz
@@ -67,8 +68,18 @@ export function QuizInterface({ quizId }: QuizInterfaceProps) {
       <Card className="w-full max-w-2xl mx-auto">
         <CardContent className="text-center py-8">
           <div className="text-red-600 mb-4">
-            <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              className="w-12 h-12 mx-auto mb-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
             <h3 className="text-lg font-semibold">Error</h3>
           </div>
@@ -90,14 +101,15 @@ export function QuizInterface({ quizId }: QuizInterfaceProps) {
   if (quiz && session) {
     const currentQuestion = getCurrentQuestion()
     const progress = getProgress()
-    
+
     if (!currentQuestion || !progress) {
       return <div>Something went wrong</div>
     }
 
     const currentAnswers = session.answers[currentQuestion.id] || []
     const isFirstQuestion = session.currentQuestionIndex === 0
-    const isLastQuestion = session.currentQuestionIndex === quiz.totalQuestions - 1
+    const isLastQuestion =
+      session.currentQuestionIndex === quiz.totalQuestions - 1
 
     const handleNext = () => {
       if (isLastQuestion && canSubmit()) {
@@ -114,9 +126,7 @@ export function QuizInterface({ quizId }: QuizInterfaceProps) {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-2xl">{quiz.title}</CardTitle>
-              <div className="text-sm text-gray-500">
-                Quiz ID: {quiz.id}
-              </div>
+              <div className="text-sm text-gray-500">Quiz ID: {quiz.id}</div>
             </div>
           </CardHeader>
           <CardContent>
@@ -133,7 +143,9 @@ export function QuizInterface({ quizId }: QuizInterfaceProps) {
           question={currentQuestion}
           questionNumber={progress.current}
           selectedAnswers={currentAnswers}
-          onAnswerChange={(answers) => updateAnswer(currentQuestion.id, answers)}
+          onAnswerChange={(answers) =>
+            updateAnswer(currentQuestion.id, answers)
+          }
           onNext={handleNext}
           onPrevious={previousQuestion}
           isFirstQuestion={isFirstQuestion}
@@ -144,16 +156,25 @@ export function QuizInterface({ quizId }: QuizInterfaceProps) {
         <Card>
           <CardContent className="py-4">
             <div className="flex flex-wrap gap-2">
-              <span className="text-sm text-gray-600 mr-2">Jump to question:</span>
-              {quiz.questions.map((_, index) => {
-                const questionId = quiz.questions[index].id
-                const isAnswered = session.answers[questionId]?.length > 0
+              <span className="text-sm text-gray-600 mr-2">
+                Jump to question:
+              </span>
+              {quiz.questions.map((question, index) => {
+                const questionId = question.id
+                const answersMap = new Map(Object.entries(session.answers))
+                const isAnswered = (answersMap.get(questionId) || []).length > 0
                 const isCurrent = index === session.currentQuestionIndex
-                
+
                 return (
                   <Button
                     key={index}
-                    variant={isCurrent ? 'primary' : isAnswered ? 'secondary' : 'outline'}
+                    variant={
+                      isCurrent
+                        ? 'primary'
+                        : isAnswered
+                          ? 'secondary'
+                          : 'outline'
+                    }
                     size="sm"
                     onClick={() => goToQuestion(index)}
                     className="w-10 h-10"
