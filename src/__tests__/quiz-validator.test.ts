@@ -40,7 +40,7 @@ describe('QuizValidator', () => {
   describe('quiz title validation', () => {
     it('should reject missing quiz title', () => {
       const quiz = { ...validQuiz }
-      delete (quiz as any).quiz_title
+      delete (quiz as Record<string, unknown>).quiz_title
 
       const result = validator.validate(quiz)
       expect(result).toBe(false)
@@ -76,7 +76,7 @@ describe('QuizValidator', () => {
   describe('questions validation', () => {
     it('should reject missing questions', () => {
       const quiz = { ...validQuiz }
-      delete (quiz as any).questions
+      delete (quiz as Record<string, unknown>).questions
 
       const result = validator.validate(quiz)
       expect(result).toBe(false)
@@ -179,7 +179,8 @@ describe('QuizValidator', () => {
       expect(result).toBe(false)
       expect(validator.getErrors()).toContainEqual({
         field: 'questions[0].options',
-        message: 'Multiple choice questions must have at least one correct option',
+        message:
+          'Multiple choice questions must have at least one correct option',
       })
     })
 

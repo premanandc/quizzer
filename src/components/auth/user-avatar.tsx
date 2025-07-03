@@ -2,6 +2,7 @@ import { auth } from '@/auth'
 import { SignInButton } from './signin-button'
 import { SignOutButton } from './signout-button'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export async function UserAvatar() {
   const session = await auth()
@@ -21,9 +22,11 @@ export async function UserAvatar() {
         className="flex items-center gap-2 hover:text-blue-600"
       >
         {session.user.image && (
-          <img
+          <Image
             src={session.user.image}
             alt={session.user.name || 'User'}
+            width={32}
+            height={32}
             className="w-8 h-8 rounded-full"
           />
         )}

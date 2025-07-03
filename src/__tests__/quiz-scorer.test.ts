@@ -3,7 +3,6 @@ import {
   calculateQuizScore,
   arraysEqual,
   getScoreGrade,
-  type ScoreResult,
 } from '@/lib/utils/quiz-scorer'
 
 describe('Quiz Scorer', () => {
@@ -87,13 +86,13 @@ describe('Quiz Scorer', () => {
     })
 
     it('should throw error for null inputs', () => {
-      expect(() =>
-        calculateQuizScore(null as any, {})
-      ).toThrow('Both user answers and correct answers must be provided')
+      expect(() => calculateQuizScore(null as never, {})).toThrow(
+        'Both user answers and correct answers must be provided'
+      )
 
-      expect(() =>
-        calculateQuizScore({}, null as any)
-      ).toThrow('Both user answers and correct answers must be provided')
+      expect(() => calculateQuizScore({}, null as never)).toThrow(
+        'Both user answers and correct answers must be provided'
+      )
     })
   })
 

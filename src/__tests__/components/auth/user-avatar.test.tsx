@@ -36,6 +36,30 @@ vi.mock('next/link', () => ({
   ),
 }))
 
+vi.mock('next/image', () => ({
+  default: ({
+    src,
+    alt,
+    width,
+    height,
+    className,
+  }: {
+    src: string
+    alt: string
+    width?: number
+    height?: number
+    className?: string
+  }) => (
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      className={className}
+    />
+  ),
+}))
+
 describe('UserAvatar', () => {
   beforeEach(() => {
     vi.clearAllMocks()

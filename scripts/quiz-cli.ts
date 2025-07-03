@@ -1,7 +1,8 @@
 #!/usr/bin/env tsx
 
 import { readFileSync, writeFileSync } from 'fs'
-import { resolve } from 'path'
+import { resolve, relative } from 'path'
+import { QuizData } from '../src/types/quiz'
 import { QuizImporter } from '../src/lib/services/quiz-importer'
 
 const importer = new QuizImporter()
@@ -28,6 +29,18 @@ async function main() {
   }
 }
 
+function validateFilePath(filePath: string): string {
+  const fullPath = resolve(filePath)
+  const relativePath = relative(process.cwd(), fullPath)
+
+  // Prevent directory traversal
+  if (relativePath.startsWith('..') || relativePath.includes('..')) {
+    throw new Error('Invalid file path: directory traversal not allowed')
+  }
+
+  return fullPath
+}
+
 async function handleImport(filePath?: string) {
   if (!filePath) {
     console.error('❌ Error: File path is required')
@@ -36,15 +49,16 @@ async function handleImport(filePath?: string) {
   }
 
   try {
-    const fullPath = resolve(filePath)
+    const fullPath = validateFilePath(filePath)
     console.log(`📂 Reading quiz file: ${fullPath}`)
-    
+
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
     const jsonData = readFileSync(fullPath, 'utf-8')
     console.log('✅ File read successfully')
-    
+
     console.log('🔍 Validating and importing quiz...')
     const result = await importer.importQuiz(jsonData)
-    
+
     if (result.success) {
       console.log(`🎉 ${result.message}`)
       console.log(`📋 Quiz ID: ${result.quizId}`)
@@ -52,12 +66,14 @@ async function handleImport(filePath?: string) {
       console.error(`❌ Import failed: ${result.message}`)
       if (result.errors) {
         console.error('Validation errors:')
-        result.errors.forEach(error => console.error(`  • ${error}`))
+        result.errors.forEach((error) => console.error(`  • ${error}`))
       }
       process.exit(1)
     }
   } catch (error) {
-    console.error(`❌ Failed to read file: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    console.error(
+      `❌ Failed to read file: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     process.exit(1)
   }
 }
@@ -66,31 +82,35 @@ async function handleList() {
   try {
     console.log('📚 Fetching quiz list...')
     const quizzes = await importer.listQuizzes()
-    
+
     if (quizzes.length === 0) {
       console.log('📝 No quizzes found. Import some quizzes first!')
       return
     }
-    
+
     console.log(`\n📋 Found ${quizzes.length} quiz(es):\n`)
-    console.log('ID'.padEnd(12) + 'Title'.padEnd(40) + 'Questions'.padEnd(12) + 'Created')
+    console.log(
+      'ID'.padEnd(12) + 'Title'.padEnd(40) + 'Questions'.padEnd(12) + 'Created'
+    )
     console.log('─'.repeat(80))
-    
-    quizzes.forEach(quiz => {
+
+    quizzes.forEach((quiz) => {
       const id = quiz.id.substring(0, 10) + '...'
-      const title = quiz.title.length > 35 ? quiz.title.substring(0, 32) + '...' : quiz.title
+      const title =
+        quiz.title.length > 35
+          ? quiz.title.substring(0, 32) + '...'
+          : quiz.title
       const questions = quiz.questionCount.toString()
       const created = quiz.createdAt.toLocaleDateString()
-      
+
       console.log(
-        id.padEnd(12) + 
-        title.padEnd(40) + 
-        questions.padEnd(12) + 
-        created
+        id.padEnd(12) + title.padEnd(40) + questions.padEnd(12) + created
       )
     })
   } catch (error) {
-    console.error(`❌ Failed to list quizzes: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    console.error(
+      `❌ Failed to list quizzes: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     process.exit(1)
   }
 }
@@ -105,16 +125,17 @@ async function handleExport(quizId?: string, outputPath?: string) {
   try {
     console.log(`📤 Exporting quiz: ${quizId}`)
     const quiz = await importer.exportQuiz(quizId)
-    
+
     if (!quiz) {
       console.error(`❌ Quiz not found: ${quizId}`)
       process.exit(1)
     }
-    
+
     const jsonData = JSON.stringify(quiz, null, 2)
-    
+
     if (outputPath) {
-      const fullPath = resolve(outputPath)
+      const fullPath = validateFilePath(outputPath)
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
       writeFileSync(fullPath, jsonData, 'utf-8')
       console.log(`✅ Quiz exported to: ${fullPath}`)
     } else {
@@ -122,7 +143,9 @@ async function handleExport(quizId?: string, outputPath?: string) {
       console.log(jsonData)
     }
   } catch (error) {
-    console.error(`❌ Failed to export quiz: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    console.error(
+      `❌ Failed to export quiz: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     process.exit(1)
   }
 }
@@ -135,36 +158,47 @@ async function handleValidate(filePath?: string) {
   }
 
   try {
-    const fullPath = resolve(filePath)
+    const fullPath = validateFilePath(filePath)
     console.log(`🔍 Validating quiz file: ${fullPath}`)
-    
+
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
     const jsonData = readFileSync(fullPath, 'utf-8')
-    
+
     // Parse JSON
     let parsedData: unknown
     try {
       parsedData = JSON.parse(jsonData)
     } catch (error) {
-      console.error(`❌ Invalid JSON format: ${error instanceof Error ? error.message : 'JSON parsing failed'}`)
+      console.error(
+        `❌ Invalid JSON format: ${error instanceof Error ? error.message : 'JSON parsing failed'}`
+      )
       process.exit(1)
     }
 
     // Import the validator directly to avoid database connection
     const { QuizValidator } = await import('../src/lib/services/quiz-validator')
     const validator = new QuizValidator()
-    
+
     if (validator.validate(parsedData)) {
-      const quiz = parsedData as any
+      const quiz = parsedData as QuizData
       console.log('✅ Quiz validation passed!')
-      console.log(`📊 Quiz: "${quiz.quiz_title}" with ${quiz.questions.length} questions`)
+      console.log(
+        `📊 Quiz: "${quiz.quiz_title}" with ${quiz.questions.length} questions`
+      )
     } else {
       console.error('❌ Validation failed')
       console.error('Validation errors:')
-      validator.getErrors().forEach(error => console.error(`  • ${error.field}: ${error.message}`))
+      validator
+        .getErrors()
+        .forEach((error) =>
+          console.error(`  • ${error.field}: ${error.message}`)
+        )
       process.exit(1)
     }
   } catch (error) {
-    console.error(`❌ Failed to validate file: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    console.error(
+      `❌ Failed to validate file: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     process.exit(1)
   }
 }
@@ -187,7 +221,7 @@ Examples:
 `)
 }
 
-main().catch(error => {
+main().catch((error) => {
   console.error('💥 Unexpected error:', error)
   process.exit(1)
 })
