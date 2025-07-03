@@ -36,6 +36,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
       - name: Type check
         run: npm run typecheck
 
@@ -67,11 +70,13 @@ jobs:
         run: npm run build
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/quizzer_test
+          AUTH_SECRET: test-secret-for-ci
 
       - name: Run E2E tests
         run: npm run test:e2e
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/quizzer_test
+          AUTH_SECRET: test-secret-for-ci
 
       # Mutation tests - Enable when we have more business logic
       # - name: Run mutation tests
