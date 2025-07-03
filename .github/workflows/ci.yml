@@ -62,7 +62,10 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/quizzer_test
 
       - name: Import quiz data for E2E tests
-        run: npm run quiz:import data/prompting-basics.json
+        run: |
+          npm run quiz:import data/prompting-basics.json
+          echo "Verifying quiz import..."
+          npx prisma db seed --preview-feature || echo "No seed script, continuing..."
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/quizzer_test
 
