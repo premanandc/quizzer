@@ -82,9 +82,10 @@ test.describe('Quiz Taking Flow', () => {
     await expect(page.locator('h1')).toContainText('Available Quizzes')
 
     // Check that we have at least one quiz or empty state
-    const hasQuizzes = await page
+    const quizButtonCount = await page
       .locator('button', { hasText: 'Start Quiz' })
-      .isVisible()
+      .count()
+    const hasQuizzes = quizButtonCount > 0
     const hasEmptyState = await page
       .locator('text=No quizzes available yet')
       .isVisible()
