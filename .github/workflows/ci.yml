@@ -70,13 +70,15 @@ jobs:
         run: npm run build
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/quizzer_test
-          AUTH_SECRET: test-secret-for-ci
+          NEXTAUTH_SECRET: test-secret-for-ci
+          NEXTAUTH_URL: http://localhost:3001
 
       - name: Run E2E tests
         run: npm run test:e2e
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/quizzer_test
-          AUTH_SECRET: test-secret-for-ci
+          NEXTAUTH_SECRET: test-secret-for-ci
+          NEXTAUTH_URL: http://localhost:3001
 
       # Mutation tests - Enable when we have more business logic
       # - name: Run mutation tests
