@@ -26,7 +26,7 @@ vi.mock('@/lib/hooks/use-quiz-session', () => ({
 describe('QuizInterface', () => {
   it('should render start screen initially', () => {
     render(<QuizInterface quizId="test-quiz" />)
-    
+
     expect(screen.getByText('Ready to Start Quiz?')).toBeInTheDocument()
     expect(screen.getByText('Start Quiz')).toBeInTheDocument()
   })

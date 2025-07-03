@@ -12,19 +12,19 @@ async function getUserStats(userId: string) {
       where: { userId },
       include: {
         quiz: {
-          select: { title: true }
-        }
+          select: { title: true },
+        },
       },
       orderBy: { completedAt: 'desc' },
       take: 10,
     }),
     prisma.quizAttempt.count({
-      where: { userId }
+      where: { userId },
     }),
     prisma.quizAttempt.aggregate({
       where: { userId },
-      _avg: { score: true }
-    })
+      _avg: { score: true },
+    }),
   ])
 
   return {
@@ -49,14 +49,23 @@ export default async function ProfilePage() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-3xl font-bold text-gray-900 hover:text-blue-600">
+            <Link
+              href="/"
+              className="text-3xl font-bold text-gray-900 hover:text-blue-600"
+            >
               Quizzer
             </Link>
             <nav className="flex items-center space-x-4">
-              <Link href="/quizzes" className="text-blue-600 hover:text-blue-800">
+              <Link
+                href="/quizzes"
+                className="text-blue-600 hover:text-blue-800"
+              >
                 Browse Quizzes
               </Link>
-              <Link href="/leaderboard" className="text-blue-600 hover:text-blue-800">
+              <Link
+                href="/leaderboard"
+                className="text-blue-600 hover:text-blue-800"
+              >
                 Leaderboard
               </Link>
               <UserAvatar />
@@ -68,7 +77,9 @@ export default async function ProfilePage() {
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 py-12">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Your Profile</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Your Profile
+          </h1>
           <p className="text-xl text-gray-600">
             Track your quiz performance and progress
           </p>
@@ -106,10 +117,13 @@ export default async function ProfilePage() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-purple-600">
-                {stats.recentAttempts.length > 0 
-                  ? Math.round(Math.max(...stats.recentAttempts.map(a => a.score)) * 100)
-                  : 0
-                }%
+                {stats.recentAttempts.length > 0
+                  ? Math.round(
+                      Math.max(...stats.recentAttempts.map((a) => a.score)) *
+                        100
+                    )
+                  : 0}
+                %
               </div>
               <p className="text-sm text-gray-600">Personal best</p>
             </CardContent>
@@ -132,7 +146,10 @@ export default async function ProfilePage() {
             ) : (
               <div className="space-y-4">
                 {stats.recentAttempts.map((attempt) => (
-                  <div key={attempt.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div
+                    key={attempt.id}
+                    className="flex items-center justify-between p-4 border rounded-lg"
+                  >
                     <div>
                       <h3 className="font-semibold">{attempt.quiz.title}</h3>
                       <p className="text-sm text-gray-600">
@@ -144,7 +161,8 @@ export default async function ProfilePage() {
                         {Math.round(attempt.score * 100)}%
                       </div>
                       <p className="text-sm text-gray-600">
-                        {Math.floor(attempt.timeSpent / 60)}m {attempt.timeSpent % 60}s
+                        {Math.floor(attempt.timeSpent / 60)}m{' '}
+                        {attempt.timeSpent % 60}s
                       </p>
                     </div>
                   </div>

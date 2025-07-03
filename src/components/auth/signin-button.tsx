@@ -9,7 +9,11 @@ interface SignInButtonProps {
   className?: string
 }
 
-export function SignInButton({ provider = 'github', children, className }: SignInButtonProps) {
+export function SignInButton({
+  provider = 'github',
+  children,
+  className,
+}: SignInButtonProps) {
   return (
     <Button
       onClick={() => signIn(provider, { callbackUrl: '/' })}

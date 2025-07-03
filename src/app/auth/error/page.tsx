@@ -27,18 +27,16 @@ export default async function AuthErrorPage({
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-red-600">Authentication Error</CardTitle>
+          <CardTitle className="text-2xl text-red-600">
+            Authentication Error
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 text-center">
-          <p className="text-gray-600">
-            {getErrorMessage(error)}
-          </p>
-          
+          <p className="text-gray-600">{getErrorMessage(error)}</p>
+
           <div className="space-y-2">
             <Link href="/auth/signin">
-              <Button className="w-full">
-                Try Again
-              </Button>
+              <Button className="w-full">Try Again</Button>
             </Link>
             <Link href="/">
               <Button variant="outline" className="w-full">

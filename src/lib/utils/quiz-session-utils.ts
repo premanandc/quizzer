@@ -28,7 +28,10 @@ export function updateSessionAnswer(
 }
 
 export function nextQuestion(session: QuizSession): QuizSession {
-  const nextIndex = Math.min(session.currentQuestionIndex + 1, session.totalQuestions - 1)
+  const nextIndex = Math.min(
+    session.currentQuestionIndex + 1,
+    session.totalQuestions - 1
+  )
   return {
     ...session,
     currentQuestionIndex: nextIndex,
@@ -43,8 +46,14 @@ export function previousQuestion(session: QuizSession): QuizSession {
   }
 }
 
-export function goToQuestion(session: QuizSession, questionIndex: number): QuizSession {
-  const validIndex = Math.max(0, Math.min(questionIndex, session.totalQuestions - 1))
+export function goToQuestion(
+  session: QuizSession,
+  questionIndex: number
+): QuizSession {
+  const validIndex = Math.max(
+    0,
+    Math.min(questionIndex, session.totalQuestions - 1)
+  )
   return {
     ...session,
     currentQuestionIndex: validIndex,
@@ -53,7 +62,9 @@ export function goToQuestion(session: QuizSession, questionIndex: number): QuizS
 
 export function completeSession(session: QuizSession): QuizSession {
   const endTime = new Date()
-  const timeSpent = Math.floor((endTime.getTime() - session.startTime.getTime()) / 1000)
+  const timeSpent = Math.floor(
+    (endTime.getTime() - session.startTime.getTime()) / 1000
+  )
 
   return {
     ...session,

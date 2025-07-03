@@ -27,8 +27,8 @@ export class LeaderboardService {
     const userStats = await prisma.user.findMany({
       where: {
         quizAttempts: {
-          some: {}
-        }
+          some: {},
+        },
       },
       select: {
         id: true,
@@ -42,23 +42,30 @@ export class LeaderboardService {
           },
           where: {
             completedAt: {
-              not: null
-            }
-          }
-        }
-      }
+              not: null,
+            },
+          },
+        },
+      },
     })
 
     const leaderboardData = userStats
-      .map(user => {
+      .map((user) => {
         const attempts = user.quizAttempts
         if (attempts.length === 0) return null
 
         const totalQuizzes = attempts.length
-        const averageScore = attempts.reduce((sum, attempt) => sum + attempt.score, 0) / totalQuizzes
-        const bestScore = Math.max(...attempts.map(attempt => attempt.score))
-        const totalTimeSpent = attempts.reduce((sum, attempt) => sum + attempt.timeSpent, 0)
-        const lastAttempt = new Date(Math.max(...attempts.map(attempt => attempt.completedAt!.getTime())))
+        const averageScore =
+          attempts.reduce((sum, attempt) => sum + attempt.score, 0) /
+          totalQuizzes
+        const bestScore = Math.max(...attempts.map((attempt) => attempt.score))
+        const totalTimeSpent = attempts.reduce(
+          (sum, attempt) => sum + attempt.timeSpent,
+          0
+        )
+        const lastAttempt = new Date(
+          Math.max(...attempts.map((attempt) => attempt.completedAt!.getTime()))
+        )
 
         return {
           userId: user.id,
@@ -69,7 +76,7 @@ export class LeaderboardService {
           bestScore,
           totalTimeSpent,
           lastAttempt,
-          rank: 0 // Will be set after sorting
+          rank: 0, // Will be set after sorting
         } as LeaderboardEntry
       })
       .filter((entry): entry is LeaderboardEntry => entry !== null)
@@ -77,11 +84,11 @@ export class LeaderboardService {
         // Primary sort by average score (descending)
         const scoreDiff = b.averageScore - a.averageScore
         if (Math.abs(scoreDiff) > 0.001) return scoreDiff
-        
+
         // Secondary sort by total quizzes (descending)
         const quizDiff = b.totalQuizzes - a.totalQuizzes
         if (quizDiff !== 0) return quizDiff
-        
+
         // Tertiary sort by best score (descending)
         return b.bestScore - a.bestScore
       })
@@ -90,32 +97,35 @@ export class LeaderboardService {
     // Assign ranks
     return leaderboardData.map((entry, index) => ({
       ...entry,
-      rank: index + 1
+      rank: index + 1,
     }))
   }
 
-  async getQuizLeaderboard(quizId: string, limit: number = 20): Promise<QuizLeaderboardEntry[]> {
+  async getQuizLeaderboard(
+    quizId: string,
+    limit: number = 20
+  ): Promise<QuizLeaderboardEntry[]> {
     const attempts = await prisma.quizAttempt.findMany({
       where: {
         quizId,
         completedAt: {
-          not: null
-        }
+          not: null,
+        },
       },
       include: {
         user: {
           select: {
             name: true,
-            image: true
-          }
-        }
+            image: true,
+          },
+        },
       },
       orderBy: [
         { score: 'desc' },
         { timeSpent: 'asc' },
-        { completedAt: 'asc' }
+        { completedAt: 'asc' },
       ],
-      take: limit
+      take: limit,
     })
 
     return attempts.map((attempt, index) => ({
@@ -125,31 +135,36 @@ export class LeaderboardService {
       score: attempt.score,
       timeSpent: attempt.timeSpent,
       completedAt: attempt.completedAt!,
-      rank: index + 1
+      rank: index + 1,
     }))
   }
 
-  async getUserRank(userId: string): Promise<{ globalRank: number; totalUsers: number } | null> {
+  async getUserRank(
+    userId: string
+  ): Promise<{ globalRank: number; totalUsers: number } | null> {
     const leaderboard = await this.getGlobalLeaderboard(1000) // Get more entries for accurate ranking
-    const userEntry = leaderboard.find(entry => entry.userId === userId)
-    
+    const userEntry = leaderboard.find((entry) => entry.userId === userId)
+
     if (!userEntry) return null
 
     return {
       globalRank: userEntry.rank,
-      totalUsers: leaderboard.length
+      totalUsers: leaderboard.length,
     }
   }
 
-  async getUserQuizRank(userId: string, quizId: string): Promise<{ rank: number; totalParticipants: number } | null> {
+  async getUserQuizRank(
+    userId: string,
+    quizId: string
+  ): Promise<{ rank: number; totalParticipants: number } | null> {
     const leaderboard = await this.getQuizLeaderboard(quizId, 1000)
-    const userEntry = leaderboard.find(entry => entry.userId === userId)
-    
+    const userEntry = leaderboard.find((entry) => entry.userId === userId)
+
     if (!userEntry) return null
 
     return {
       rank: userEntry.rank,
-      totalParticipants: leaderboard.length
+      totalParticipants: leaderboard.length,
     }
   }
 
@@ -159,41 +174,42 @@ export class LeaderboardService {
     totalAttempts: number
     averageScore: number
   }> {
-    const [totalUsers, totalQuizzes, totalAttempts, avgScore] = await Promise.all([
-      prisma.user.count({
-        where: {
-          quizAttempts: {
-            some: {}
-          }
-        }
-      }),
-      prisma.quiz.count({
-        where: { isActive: true }
-      }),
-      prisma.quizAttempt.count({
-        where: {
-          completedAt: {
-            not: null
-          }
-        }
-      }),
-      prisma.quizAttempt.aggregate({
-        where: {
-          completedAt: {
-            not: null
-          }
-        },
-        _avg: {
-          score: true
-        }
-      })
-    ])
+    const [totalUsers, totalQuizzes, totalAttempts, avgScore] =
+      await Promise.all([
+        prisma.user.count({
+          where: {
+            quizAttempts: {
+              some: {},
+            },
+          },
+        }),
+        prisma.quiz.count({
+          where: { isActive: true },
+        }),
+        prisma.quizAttempt.count({
+          where: {
+            completedAt: {
+              not: null,
+            },
+          },
+        }),
+        prisma.quizAttempt.aggregate({
+          where: {
+            completedAt: {
+              not: null,
+            },
+          },
+          _avg: {
+            score: true,
+          },
+        }),
+      ])
 
     return {
       totalUsers,
       totalQuizzes,
       totalAttempts,
-      averageScore: avgScore._avg.score || 0
+      averageScore: avgScore._avg.score || 0,
     }
   }
 }

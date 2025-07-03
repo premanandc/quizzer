@@ -23,8 +23,8 @@ const eslintConfig = [
       'playwright-report/**',
       'test-results/**',
       'stryker-report/**',
-      '.stryker-tmp/**'
-    ]
+      '.stryker-tmp/**',
+    ],
   },
   {
     plugins: {

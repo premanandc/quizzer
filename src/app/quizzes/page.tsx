@@ -15,11 +15,17 @@ export default async function QuizzesPage() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-3xl font-bold text-gray-900 hover:text-blue-600">
+            <Link
+              href="/"
+              className="text-3xl font-bold text-gray-900 hover:text-blue-600"
+            >
               Quizzer
             </Link>
             <nav className="flex items-center space-x-4">
-              <Link href="/leaderboard" className="text-blue-600 hover:text-blue-800">
+              <Link
+                href="/leaderboard"
+                className="text-blue-600 hover:text-blue-800"
+              >
                 Leaderboard
               </Link>
               <UserAvatar />
@@ -31,7 +37,9 @@ export default async function QuizzesPage() {
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 py-12">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Available Quizzes</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Available Quizzes
+          </h1>
           <p className="text-xl text-gray-600">
             Choose a quiz to test your knowledge
           </p>
@@ -42,7 +50,8 @@ export default async function QuizzesPage() {
             <CardContent className="py-12">
               <p className="text-gray-600 mb-4">No quizzes available yet.</p>
               <p className="text-sm text-gray-500">
-                Import quizzes using the CLI: <code>npm run quiz:import path/to/quiz.json</code>
+                Import quizzes using the CLI:{' '}
+                <code>npm run quiz:import path/to/quiz.json</code>
               </p>
             </CardContent>
           </Card>
@@ -61,11 +70,16 @@ export default async function QuizzesPage() {
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-gray-600">
-                      Quiz ID: <code className="bg-gray-100 px-1 rounded">{quiz.id}</code>
+                      Quiz ID:{' '}
+                      <code className="bg-gray-100 px-1 rounded">
+                        {quiz.id}
+                      </code>
                     </div>
                     <div className="flex gap-2">
                       <Link href={`/quiz/${quiz.id}/leaderboard`}>
-                        <Button variant="outline" size="sm">Leaderboard</Button>
+                        <Button variant="outline" size="sm">
+                          Leaderboard
+                        </Button>
                       </Link>
                       <Link href={`/quiz/${quiz.id}`}>
                         <Button>Start Quiz</Button>
