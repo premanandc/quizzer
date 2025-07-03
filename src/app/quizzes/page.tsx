@@ -106,3 +106,6 @@ export const metadata = {
   title: 'Available Quizzes - Quizzer',
   description: 'Browse and select from available quizzes',
 }
+
+// Make this page dynamic to avoid build-time database calls
+export const dynamic = 'force-dynamic'

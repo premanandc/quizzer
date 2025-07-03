@@ -209,6 +209,9 @@ export default async function QuizLeaderboardPage({
   )
 }
 
+// Make this page dynamic to avoid build-time database calls
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params }: QuizLeaderboardPageProps) {
   const { id } = await params
   const quiz = await quizService.getQuiz(id)

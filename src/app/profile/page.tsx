@@ -186,3 +186,6 @@ export const metadata = {
   title: 'Profile - Quizzer',
   description: 'View your quiz performance and statistics',
 }
+
+// Make this page dynamic to avoid build-time database calls
+export const dynamic = 'force-dynamic'

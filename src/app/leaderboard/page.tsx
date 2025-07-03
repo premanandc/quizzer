@@ -239,3 +239,6 @@ export const metadata = {
   title: 'Leaderboard - Quizzer',
   description: 'Global leaderboard showing top quiz performers',
 }
+
+// Make this page dynamic to avoid build-time database calls
+export const dynamic = 'force-dynamic'
