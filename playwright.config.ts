@@ -22,9 +22,8 @@ export default defineConfig({
     url: 'http://localhost:3001',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
-    stderr: 'pipe',
+    stderr: 'pipe', // Suppress NextAuth CredentialsSignin errors - these are expected when E2E tests intentionally try invalid login credentials
     env: {
-      // Suppress expected auth errors in E2E tests
       NODE_ENV: 'test',
     },
   },
