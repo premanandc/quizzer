@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { POST } from '@/app/api/auth/register/route'
+import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/db'
 import bcrypt from 'bcryptjs'
 
@@ -33,21 +34,23 @@ describe('/api/auth/register', () => {
       id: 'user-123',
       name: 'John Doe',
       email: 'john@example.com',
+      emailVerified: null,
+      image: null,
       password: 'hashedpassword',
       createdAt: new Date(),
       updatedAt: new Date(),
     }
 
     // Mock bcrypt hash
-    vi.mocked(bcrypt.hash).mockResolvedValue('hashedpassword')
+    vi.mocked(bcrypt.hash).mockResolvedValue('hashedpassword' as never)
 
     // Mock user not existing
     vi.mocked(prisma.user.findUnique).mockResolvedValue(null)
 
     // Mock user creation
-    vi.mocked(prisma.user.create).mockResolvedValue(mockUser)
+    vi.mocked(prisma.user.create).mockResolvedValue(mockUser as never)
 
-    const request = new Request('http://localhost/api/auth/register', {
+    const request = new NextRequest('http://localhost/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -91,7 +94,7 @@ describe('/api/auth/register', () => {
     ]
 
     for (const body of testCases) {
-      const request = new Request('http://localhost/api/auth/register', {
+      const request = new NextRequest('http://localhost/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -115,7 +118,7 @@ describe('/api/auth/register', () => {
     ]
 
     for (const email of invalidEmails) {
-      const request = new Request('http://localhost/api/auth/register', {
+      const request = new NextRequest('http://localhost/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -134,7 +137,7 @@ describe('/api/auth/register', () => {
   })
 
   it('should return 400 for password too short', async () => {
-    const request = new Request('http://localhost/api/auth/register', {
+    const request = new NextRequest('http://localhost/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -156,13 +159,17 @@ describe('/api/auth/register', () => {
       id: 'existing-user',
       name: 'Existing User',
       email: 'existing@example.com',
+      emailVerified: null,
+      image: null,
       password: 'hashedpassword',
+      createdAt: new Date(),
+      updatedAt: new Date(),
     }
 
     // Mock user already exists
-    vi.mocked(prisma.user.findUnique).mockResolvedValue(existingUser)
+    vi.mocked(prisma.user.findUnique).mockResolvedValue(existingUser as never)
 
-    const request = new Request('http://localhost/api/auth/register', {
+    const request = new NextRequest('http://localhost/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -186,7 +193,7 @@ describe('/api/auth/register', () => {
       new Error('Database error')
     )
 
-    const request = new Request('http://localhost/api/auth/register', {
+    const request = new NextRequest('http://localhost/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -210,7 +217,7 @@ describe('/api/auth/register', () => {
     // Mock bcrypt error
     vi.mocked(bcrypt.hash).mockRejectedValue(new Error('Bcrypt error'))
 
-    const request = new Request('http://localhost/api/auth/register', {
+    const request = new NextRequest('http://localhost/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -228,7 +235,7 @@ describe('/api/auth/register', () => {
   })
 
   it('should handle malformed JSON', async () => {
-    const request = new Request('http://localhost/api/auth/register', {
+    const request = new NextRequest('http://localhost/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: 'invalid json',
@@ -252,17 +259,19 @@ describe('/api/auth/register', () => {
     for (const email of validEmails) {
       // Mock user not existing
       vi.mocked(prisma.user.findUnique).mockResolvedValue(null)
-      vi.mocked(bcrypt.hash).mockResolvedValue('hashedpassword')
+      vi.mocked(bcrypt.hash).mockResolvedValue('hashedpassword' as never)
       vi.mocked(prisma.user.create).mockResolvedValue({
         id: 'user-123',
         name: 'Test User',
         email,
+        emailVerified: null,
+        image: null,
         password: 'hashedpassword',
         createdAt: new Date(),
         updatedAt: new Date(),
-      })
+      } as never)
 
-      const request = new Request('http://localhost/api/auth/register', {
+      const request = new NextRequest('http://localhost/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

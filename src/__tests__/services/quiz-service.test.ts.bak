@@ -130,9 +130,7 @@ describe('QuizService', () => {
         ...mockQuizData,
         description: null,
       }
-      mockPrisma.quiz.findUnique.mockResolvedValue(
-        quizWithNullDescription as any
-      )
+      mockPrisma.quiz.findUnique.mockResolvedValue(quizWithNullDescription as any)
 
       const result = await quizService.getQuiz('quiz-1')
 
@@ -154,9 +152,7 @@ describe('QuizService', () => {
           },
         ],
       }
-      mockPrisma.quiz.findUnique.mockResolvedValue(
-        quizWithEmptyExplanation as any
-      )
+      mockPrisma.quiz.findUnique.mockResolvedValue(quizWithEmptyExplanation as any)
 
       const result = await quizService.getQuiz('quiz-1')
 
@@ -181,7 +177,7 @@ describe('QuizService', () => {
         },
       ]
 
-      mockPrisma.quiz.findMany.mockResolvedValue(mockQuizzes as any)
+      mockPrisma.quiz.findMany.mockResolvedValue(mockQuizzes)
 
       const result = await quizService.getAvailableQuizzes()
 
@@ -202,7 +198,7 @@ describe('QuizService', () => {
     })
 
     it('should return empty array when no quizzes exist', async () => {
-      mockPrisma.quiz.findMany.mockResolvedValue([] as any)
+      mockPrisma.quiz.findMany.mockResolvedValue([])
 
       const result = await quizService.getAvailableQuizzes()
 
@@ -387,7 +383,7 @@ describe('QuizService', () => {
     }
 
     it('should submit quiz and calculate score correctly', async () => {
-      const mockAttempt: any = { id: 'attempt-1' }
+      const mockAttempt: QuizAttemptCreateArgs = { id: 'attempt-1' }
       mockPrisma.$transaction.mockImplementation(async (callback) => {
         mockPrisma.quizAttempt.create.mockResolvedValue(mockAttempt)
         return callback(mockPrisma)

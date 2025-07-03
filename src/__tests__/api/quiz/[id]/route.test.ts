@@ -1,8 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { GET } from '@/app/api/quiz/[id]/route'
+import { NextRequest } from 'next/server'
 
 // Create a shared mock reference that will be replaced in tests
-let mockGetQuiz: (...args: unknown[]) => unknown
+let mockGetQuiz: ReturnType<typeof vi.fn>
 
 // Mock the entire module
 vi.mock('@/lib/services/quiz-service', () => {
@@ -60,7 +61,7 @@ describe('/api/quiz/[id] - GET', () => {
 
     mockGetQuiz.mockResolvedValue(mockQuiz)
 
-    const request = new Request('http://localhost/api/quiz/quiz-123')
+    const request = new NextRequest('http://localhost/api/quiz/quiz-123')
     const params = Promise.resolve({ id: 'quiz-123' })
 
     const response = await GET(request, { params })
@@ -74,7 +75,7 @@ describe('/api/quiz/[id] - GET', () => {
   it('should return 404 for non-existent quiz', async () => {
     mockGetQuiz.mockResolvedValue(null)
 
-    const request = new Request('http://localhost/api/quiz/nonexistent')
+    const request = new NextRequest('http://localhost/api/quiz/nonexistent')
     const params = Promise.resolve({ id: 'nonexistent' })
 
     const response = await GET(request, { params })
@@ -88,7 +89,7 @@ describe('/api/quiz/[id] - GET', () => {
   it('should return 500 for database errors', async () => {
     mockGetQuiz.mockRejectedValue(new Error('Database error'))
 
-    const request = new Request('http://localhost/api/quiz/quiz-123')
+    const request = new NextRequest('http://localhost/api/quiz/quiz-123')
     const params = Promise.resolve({ id: 'quiz-123' })
 
     const response = await GET(request, { params })
@@ -112,7 +113,7 @@ describe('/api/quiz/[id] - GET', () => {
 
     mockGetQuiz.mockResolvedValue(mockQuiz)
 
-    const request = new Request(`http://localhost/api/quiz/${specialId}`)
+    const request = new NextRequest(`http://localhost/api/quiz/${specialId}`)
     const params = Promise.resolve({ id: specialId })
 
     const response = await GET(request, { params })
@@ -126,7 +127,7 @@ describe('/api/quiz/[id] - GET', () => {
   it('should handle empty quiz ID', async () => {
     mockGetQuiz.mockResolvedValue(null)
 
-    const request = new Request('http://localhost/api/quiz/')
+    const request = new NextRequest('http://localhost/api/quiz/')
     const params = Promise.resolve({ id: '' })
 
     const response = await GET(request, { params })
@@ -165,7 +166,7 @@ describe('/api/quiz/[id] - GET', () => {
 
     mockGetQuiz.mockResolvedValue(mockQuiz)
 
-    const request = new Request('http://localhost/api/quiz/quiz-123')
+    const request = new NextRequest('http://localhost/api/quiz/quiz-123')
     const params = Promise.resolve({ id: 'quiz-123' })
 
     const response = await GET(request, { params })
@@ -239,7 +240,7 @@ describe('/api/quiz/[id] - GET', () => {
 
     mockGetQuiz.mockResolvedValue(mockQuiz)
 
-    const request = new Request('http://localhost/api/quiz/quiz-multi')
+    const request = new NextRequest('http://localhost/api/quiz/quiz-multi')
     const params = Promise.resolve({ id: 'quiz-multi' })
 
     const response = await GET(request, { params })

@@ -111,7 +111,7 @@ describe('LeaderboardService', () => {
     })
 
     it('should handle empty user list', async () => {
-      vi.mocked(prisma.user.findMany).mockResolvedValue([] as any)
+      vi.mocked(prisma.user.findMany).mockResolvedValue([])
 
       const result = await service.getGlobalLeaderboard()
 
@@ -136,9 +136,7 @@ describe('LeaderboardService', () => {
         },
       ]
 
-      vi.mocked(prisma.user.findMany).mockResolvedValue(
-        usersWithNoAttempts as any
-      )
+      vi.mocked(prisma.user.findMany).mockResolvedValue(usersWithNoAttempts)
 
       const result = await service.getGlobalLeaderboard()
 
@@ -208,9 +206,7 @@ describe('LeaderboardService', () => {
         },
       ]
 
-      vi.mocked(prisma.user.findMany).mockResolvedValue(
-        usersWithSameScore as any
-      )
+      vi.mocked(prisma.user.findMany).mockResolvedValue(usersWithSameScore)
 
       const result = await service.getGlobalLeaderboard()
 
@@ -249,9 +245,7 @@ describe('LeaderboardService', () => {
     ]
 
     it('should return quiz leaderboard with correct ranking', async () => {
-      vi.mocked(prisma.quizAttempt.findMany).mockResolvedValue(
-        mockAttempts as any
-      )
+      vi.mocked(prisma.quizAttempt.findMany).mockResolvedValue(mockAttempts)
 
       const result = await service.getQuizLeaderboard('quiz-123')
 
@@ -289,7 +283,7 @@ describe('LeaderboardService', () => {
     })
 
     it('should handle empty attempts list', async () => {
-      vi.mocked(prisma.quizAttempt.findMany).mockResolvedValue([] as any)
+      vi.mocked(prisma.quizAttempt.findMany).mockResolvedValue([])
 
       const result = await service.getQuizLeaderboard('quiz-123')
 
@@ -297,9 +291,7 @@ describe('LeaderboardService', () => {
     })
 
     it('should respect limit parameter', async () => {
-      vi.mocked(prisma.quizAttempt.findMany).mockResolvedValue(
-        mockAttempts as any
-      )
+      vi.mocked(prisma.quizAttempt.findMany).mockResolvedValue(mockAttempts)
 
       const result = await service.getQuizLeaderboard('quiz-123', 2)
 
@@ -329,9 +321,7 @@ describe('LeaderboardService', () => {
     })
 
     it('should use default limit of 20', async () => {
-      vi.mocked(prisma.quizAttempt.findMany).mockResolvedValue(
-        mockAttempts as any
-      )
+      vi.mocked(prisma.quizAttempt.findMany).mockResolvedValue(mockAttempts)
 
       await service.getQuizLeaderboard('quiz-123')
 

@@ -60,11 +60,11 @@ describe('SignInForm', () => {
           setTimeout(
             () =>
               resolve({
-                error: null,
+                error: undefined,
                 status: 200,
                 ok: true,
                 url: null,
-              }),
+              } as any),
             100
           )
         )
@@ -101,7 +101,7 @@ describe('SignInForm', () => {
       status: 401,
       ok: false,
       url: null,
-    })
+    } as any)
 
     render(<SignInForm />)
 
@@ -151,11 +151,11 @@ describe('SignInForm', () => {
           setTimeout(
             () =>
               resolve({
-                error: null,
+                error: undefined,
                 status: 200,
                 ok: true,
                 url: null,
-              }),
+              } as any),
             100
           )
         )
@@ -206,11 +206,11 @@ describe('SignInForm', () => {
           setTimeout(
             () =>
               resolve({
-                error: null,
+                error: undefined,
                 status: 200,
                 ok: true,
                 url: null,
-              }),
+              } as any),
             100
           )
         )
@@ -241,7 +241,7 @@ describe('SignInForm', () => {
       status: 401,
       ok: false,
       url: null,
-    })
+    } as any)
 
     render(<SignInForm />)
 
@@ -270,7 +270,7 @@ describe('SignInForm', () => {
       status: 200,
       ok: true,
       url: null,
-    })
+    } as any)
 
     render(<SignInForm />)
 

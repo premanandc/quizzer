@@ -2,7 +2,7 @@
 
 import { readFileSync, writeFileSync } from 'fs'
 import { resolve, relative } from 'path'
-import { QuizData } from '../src/types/quiz'
+import { Quiz } from '../src/lib/types/quiz'
 import { QuizImporter } from '../src/lib/services/quiz-importer'
 
 const importer = new QuizImporter()
@@ -180,7 +180,7 @@ async function handleValidate(filePath?: string) {
     const validator = new QuizValidator()
 
     if (validator.validate(parsedData)) {
-      const quiz = parsedData as QuizData
+      const quiz = parsedData as Quiz
       console.log('✅ Quiz validation passed!')
       console.log(
         `📊 Quiz: "${quiz.quiz_title}" with ${quiz.questions.length} questions`

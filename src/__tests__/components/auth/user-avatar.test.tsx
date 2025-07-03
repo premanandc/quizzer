@@ -71,7 +71,7 @@ describe('UserAvatar', () => {
   })
 
   it('should show sign in button when user is not authenticated', async () => {
-    vi.mocked(auth).mockResolvedValue(null)
+    vi.mocked(auth).mockResolvedValue(null as any)
 
     render(await UserAvatar())
 
@@ -91,7 +91,7 @@ describe('UserAvatar', () => {
       },
     }
 
-    vi.mocked(auth).mockResolvedValue(mockSession)
+    vi.mocked(auth).mockResolvedValue(mockSession as any)
 
     render(await UserAvatar())
 
@@ -112,7 +112,7 @@ describe('UserAvatar', () => {
       },
     }
 
-    vi.mocked(auth).mockResolvedValue(mockSession)
+    vi.mocked(auth).mockResolvedValue(mockSession as any)
 
     render(await UserAvatar())
 
@@ -132,7 +132,7 @@ describe('UserAvatar', () => {
       },
     }
 
-    vi.mocked(auth).mockResolvedValue(mockSession)
+    vi.mocked(auth).mockResolvedValue(mockSession as any)
 
     render(await UserAvatar())
 
@@ -150,7 +150,7 @@ describe('UserAvatar', () => {
       },
     }
 
-    vi.mocked(auth).mockResolvedValue(mockSession)
+    vi.mocked(auth).mockResolvedValue(mockSession as any)
 
     render(await UserAvatar())
 
@@ -168,7 +168,7 @@ describe('UserAvatar', () => {
       },
     }
 
-    vi.mocked(auth).mockResolvedValue(mockSession)
+    vi.mocked(auth).mockResolvedValue(mockSession as any)
 
     render(await UserAvatar())
 
@@ -186,7 +186,7 @@ describe('UserAvatar', () => {
       },
     }
 
-    vi.mocked(auth).mockResolvedValue(mockSession)
+    vi.mocked(auth).mockResolvedValue(mockSession as any)
 
     render(await UserAvatar())
 
@@ -203,7 +203,7 @@ describe('UserAvatar', () => {
       },
     }
 
-    vi.mocked(auth).mockResolvedValue(mockSession)
+    vi.mocked(auth).mockResolvedValue(mockSession as any)
 
     render(await UserAvatar())
 
@@ -222,7 +222,7 @@ describe('UserAvatar', () => {
       user: {},
     }
 
-    vi.mocked(auth).mockResolvedValue(mockSession)
+    vi.mocked(auth).mockResolvedValue(mockSession as any)
 
     render(await UserAvatar())
 
@@ -238,7 +238,7 @@ describe('UserAvatar', () => {
       },
     }
 
-    vi.mocked(auth).mockResolvedValue(mockSession)
+    vi.mocked(auth).mockResolvedValue(mockSession as any)
 
     render(await UserAvatar())
 
@@ -257,7 +257,7 @@ describe('UserAvatar', () => {
       },
     }
 
-    vi.mocked(auth).mockResolvedValue(mockSession)
+    vi.mocked(auth).mockResolvedValue(mockSession as any)
 
     render(await UserAvatar())
 

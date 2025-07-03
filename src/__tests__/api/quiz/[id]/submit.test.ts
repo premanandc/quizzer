@@ -1,9 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { POST } from '@/app/api/quiz/[id]/submit/route'
+import { NextRequest } from 'next/server'
 
 // Create shared mock references that will be replaced in tests
-let mockSubmitQuiz: (...args: unknown[]) => unknown
-let mockAuth: (...args: unknown[]) => unknown
+let mockSubmitQuiz: ReturnType<typeof vi.fn>
+let mockAuth: ReturnType<typeof vi.fn>
 
 // Mock dependencies
 vi.mock('@/lib/services/quiz-service', () => {
@@ -150,14 +151,17 @@ describe('/api/quiz/[id]/submit - POST', () => {
     mockAuth.mockResolvedValue(mockSession)
     mockSubmitQuiz.mockResolvedValue(mockResult)
 
-    const request = new Request('http://localhost/api/quiz/quiz-123/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        quizSession: mockQuizSession,
-        quiz: mockQuiz,
-      }),
-    })
+    const request = new NextRequest(
+      'http://localhost/api/quiz/quiz-123/submit',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizSession: mockQuizSession,
+          quiz: mockQuiz,
+        }),
+      }
+    )
 
     const params = Promise.resolve({ id: 'quiz-123' })
     const response = await POST(request, { params })
@@ -179,14 +183,17 @@ describe('/api/quiz/[id]/submit - POST', () => {
     mockAuth.mockResolvedValue(null)
     mockSubmitQuiz.mockResolvedValue(mockResult)
 
-    const request = new Request('http://localhost/api/quiz/quiz-123/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        quizSession: mockQuizSession,
-        quiz: mockQuiz,
-      }),
-    })
+    const request = new NextRequest(
+      'http://localhost/api/quiz/quiz-123/submit',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizSession: mockQuizSession,
+          quiz: mockQuiz,
+        }),
+      }
+    )
 
     const params = Promise.resolve({ id: 'quiz-123' })
     const response = await POST(request, { params })
@@ -207,13 +214,16 @@ describe('/api/quiz/[id]/submit - POST', () => {
   it('should return 400 for missing quizSession', async () => {
     mockAuth.mockResolvedValue(null)
 
-    const request = new Request('http://localhost/api/quiz/quiz-123/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        quiz: mockQuiz,
-      }),
-    })
+    const request = new NextRequest(
+      'http://localhost/api/quiz/quiz-123/submit',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quiz: mockQuiz,
+        }),
+      }
+    )
 
     const params = Promise.resolve({ id: 'quiz-123' })
     const response = await POST(request, { params })
@@ -227,13 +237,16 @@ describe('/api/quiz/[id]/submit - POST', () => {
   it('should return 400 for missing quiz', async () => {
     mockAuth.mockResolvedValue(null)
 
-    const request = new Request('http://localhost/api/quiz/quiz-123/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        quizSession: mockQuizSession,
-      }),
-    })
+    const request = new NextRequest(
+      'http://localhost/api/quiz/quiz-123/submit',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizSession: mockQuizSession,
+        }),
+      }
+    )
 
     const params = Promise.resolve({ id: 'quiz-123' })
     const response = await POST(request, { params })
@@ -247,11 +260,14 @@ describe('/api/quiz/[id]/submit - POST', () => {
   it('should return 400 for both missing data', async () => {
     mockAuth.mockResolvedValue(null)
 
-    const request = new Request('http://localhost/api/quiz/quiz-123/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({}),
-    })
+    const request = new NextRequest(
+      'http://localhost/api/quiz/quiz-123/submit',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      }
+    )
 
     const params = Promise.resolve({ id: 'quiz-123' })
     const response = await POST(request, { params })
@@ -266,14 +282,17 @@ describe('/api/quiz/[id]/submit - POST', () => {
     mockAuth.mockResolvedValue(null)
     mockSubmitQuiz.mockRejectedValue(new Error('Database error'))
 
-    const request = new Request('http://localhost/api/quiz/quiz-123/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        quizSession: mockQuizSession,
-        quiz: mockQuiz,
-      }),
-    })
+    const request = new NextRequest(
+      'http://localhost/api/quiz/quiz-123/submit',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizSession: mockQuizSession,
+          quiz: mockQuiz,
+        }),
+      }
+    )
 
     const params = Promise.resolve({ id: 'quiz-123' })
     const response = await POST(request, { params })
@@ -286,14 +305,17 @@ describe('/api/quiz/[id]/submit - POST', () => {
   it('should return 500 for auth errors', async () => {
     mockAuth.mockRejectedValue(new Error('Auth error'))
 
-    const request = new Request('http://localhost/api/quiz/quiz-123/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        quizSession: mockQuizSession,
-        quiz: mockQuiz,
-      }),
-    })
+    const request = new NextRequest(
+      'http://localhost/api/quiz/quiz-123/submit',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizSession: mockQuizSession,
+          quiz: mockQuiz,
+        }),
+      }
+    )
 
     const params = Promise.resolve({ id: 'quiz-123' })
     const response = await POST(request, { params })
@@ -306,11 +328,14 @@ describe('/api/quiz/[id]/submit - POST', () => {
   it('should handle malformed JSON', async () => {
     mockAuth.mockResolvedValue(null)
 
-    const request = new Request('http://localhost/api/quiz/quiz-123/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: 'invalid json',
-    })
+    const request = new NextRequest(
+      'http://localhost/api/quiz/quiz-123/submit',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: 'invalid json',
+      }
+    )
 
     const params = Promise.resolve({ id: 'quiz-123' })
     const response = await POST(request, { params })
@@ -333,14 +358,17 @@ describe('/api/quiz/[id]/submit - POST', () => {
       startTime: '2024-01-01T15:30:45.123Z',
     }
 
-    const request = new Request('http://localhost/api/quiz/quiz-123/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        quizSession: sessionWithStringTime,
-        quiz: mockQuiz,
-      }),
-    })
+    const request = new NextRequest(
+      'http://localhost/api/quiz/quiz-123/submit',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizSession: sessionWithStringTime,
+          quiz: mockQuiz,
+        }),
+      }
+    )
 
     const params = Promise.resolve({ id: 'quiz-123' })
     const response = await POST(request, { params })
@@ -364,14 +392,17 @@ describe('/api/quiz/[id]/submit - POST', () => {
     mockAuth.mockResolvedValue(mockSession)
     mockSubmitQuiz.mockResolvedValue(mockResult)
 
-    const request = new Request('http://localhost/api/quiz/quiz-123/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        quizSession: mockQuizSession,
-        quiz: mockQuiz,
-      }),
-    })
+    const request = new NextRequest(
+      'http://localhost/api/quiz/quiz-123/submit',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizSession: mockQuizSession,
+          quiz: mockQuiz,
+        }),
+      }
+    )
 
     const params = Promise.resolve({ id: 'quiz-123' })
     const response = await POST(request, { params })
@@ -402,14 +433,17 @@ describe('/api/quiz/[id]/submit - POST', () => {
       answers: {},
     }
 
-    const request = new Request('http://localhost/api/quiz/quiz-123/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        quizSession: emptySession,
-        quiz: mockQuiz,
-      }),
-    })
+    const request = new NextRequest(
+      'http://localhost/api/quiz/quiz-123/submit',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizSession: emptySession,
+          quiz: mockQuiz,
+        }),
+      }
+    )
 
     const params = Promise.resolve({ id: 'quiz-123' })
     const response = await POST(request, { params })

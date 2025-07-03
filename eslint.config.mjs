@@ -47,6 +47,12 @@ const eslintConfig = [
       'security/detect-pseudoRandomBytes': 'error',
     },
   },
+  {
+    files: ['**/__tests__/**/*', '**/*.test.*', '**/*.spec.*'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
 ]
 
 export default eslintConfig
