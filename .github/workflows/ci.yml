@@ -61,6 +61,11 @@ jobs:
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/quizzer_test
 
+      - name: Import quiz data for E2E tests
+        run: npm run quiz:import data/prompting-basics.json
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/quizzer_test
+
       - name: Run unit tests
         run: npm run test
         env:

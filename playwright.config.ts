@@ -22,5 +22,10 @@ export default defineConfig({
     url: 'http://localhost:3001',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
+    stderr: 'pipe',
+    env: {
+      // Suppress expected auth errors in E2E tests
+      NODE_ENV: 'test',
+    },
   },
 })
