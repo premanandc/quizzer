@@ -21,10 +21,11 @@ test.describe('Complete Quiz Journey', () => {
       console.log('No quiz buttons found on home page')
     }
 
-    // Start the quiz
-    const startButton = page.locator('button', { hasText: 'Start Quiz' })
-    if (await startButton.isVisible()) {
-      await startButton.click()
+    // Start the quiz - handle multiple "Start Quiz" buttons
+    const startButtons = page.locator('button', { hasText: 'Start Quiz' })
+    const startButtonCount = await startButtons.count()
+    if (startButtonCount > 0) {
+      await startButtons.first().click()
     }
 
     // Wait for quiz content to load
